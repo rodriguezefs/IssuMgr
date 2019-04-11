@@ -1,0 +1,21 @@
+﻿** Aspectos destacados
+     Tablas que se volverán a compilar
+       Ninguno
+     Índices clúster que se van a quitar
+       Ninguno
+     Índices clúster que se van a crear
+       Ninguno
+     Posibles problemas de datos
+       Ninguno
+
+** Acciones del usuario
+     Crear
+       [dbo].[Asg] (Tabla)
+       [dbo].[Issu] (Tabla)
+       [dbo].[Lbl] (Tabla)
+       [dbo].[LblxIssu] (Tabla)
+       Restricción DEFAULT: restricción sin nombre en [dbo].[Issu] (Restricción DEFAULT)
+       [dbo].[FK_LblxIssu_Issu] (Clave externa)
+       [dbo].[FK_LblxIssu_Lbl] (Clave externa)
+
+** Acciones de compatibilidad

@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[Issu]
+(
+	[IssuId] INT NOT NULL PRIMARY KEY IDENTITY (1,1),
+	[Tit] NVARCHAR(100) NOT NULL,
+	[Txt] NVARCHAR(MAX) NOT NULL,
+	[St] int NOT NULL, 
+    [StmCre] DATETIME2 NOT NULL DEFAULT getdate(), 
+    [StmMdf] DATETIME2 NOT NULL
+)

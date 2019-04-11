@@ -1,0 +1,12 @@
+C:\Users\rodri\source\Core\IssuMgr\IssuMgr.SQL\bin\Debug\IssuMgr.SQL.dacpac
+C:\Users\rodri\source\Core\IssuMgr\IssuMgr.SQL\bin\Debug\IssuMgr.SQL.dll
+C:\Users\rodri\source\Core\IssuMgr\IssuMgr.SQL\bin\Debug\IssuMgr.SQL.pdb
+C:\Users\rodri\source\Core\IssuMgr\IssuMgr.SQL\obj\Debug\IssuMgr.SQL.sqlprojAssemblyReference.cache
+C:\Users\rodri\source\Core\IssuMgr\IssuMgr.SQL\obj\Debug\IssuMgr.SQL.dll
+C:\Users\rodri\source\Core\IssuMgr\IssuMgr.SQL\obj\Debug\IssuMgr.SQL.pdb
+C:\Users\ER\source\Core\IssuMgr\IssuMgr.SQL\bin\Debug\IssuMgr.SQL.dacpac
+C:\Users\ER\source\Core\IssuMgr\IssuMgr.SQL\bin\Debug\IssuMgr.SQL.dll
+C:\Users\ER\source\Core\IssuMgr\IssuMgr.SQL\bin\Debug\IssuMgr.SQL.pdb
+C:\Users\ER\source\Core\IssuMgr\IssuMgr.SQL\obj\Debug\IssuMgr.SQL.sqlprojAssemblyReference.cache
+C:\Users\ER\source\Core\IssuMgr\IssuMgr.SQL\obj\Debug\IssuMgr.SQL.dll
+C:\Users\ER\source\Core\IssuMgr\IssuMgr.SQL\obj\Debug\IssuMgr.SQL.pdb
