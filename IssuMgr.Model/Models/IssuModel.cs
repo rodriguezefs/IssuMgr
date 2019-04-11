@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace IssuMgr.Model {
     public enum IssueSt {
@@ -11,6 +12,7 @@ namespace IssuMgr.Model {
         public string Txt { get; set; }
         public IssueSt St { get; set; }
         public DateTime StmCre { get; set; }
-        public DateTime StMdf { get; set; }
+        public DateTime StmMdf { get; set; }
+        public List<LblModel> Lbls { get; set; }
     }
 }
