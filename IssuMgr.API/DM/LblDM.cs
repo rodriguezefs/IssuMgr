@@ -9,33 +9,31 @@ using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace IssuMgr.API.DM {
-    public class IssuDM: IIssuDM {
+    public class LblDM: ILblDM {
         private readonly IConfiguration Cfg;
-        public IssuDM(IConfiguration cfg) {
+        public LblDM(IConfiguration cfg) {
             Cfg = cfg;
         }
-        public async Task<ExeRslt> Create(IssuModel Issu) {
+        public async Task<ExeRslt> Create(LblModel Lbl) {
             string lxQry =
-                "INSERT INTO [Issu] " +
-                "(Tit, Txt, St, StmCre, StMdf) " +
-                "OUTPUT Inserted.IssuId " +
+                "INSERT INTO [Lbl] " +
+                "(Lbl, Clr) " +
+                "OUTPUT Inserted.LblId " +
                 "VALUES " +
-                "(@Tit, @Txt, @St, GetDates(), GetDate()) ";
-            //TODO Procesar los labels asignados
-            //TODO Manejo de transacciones
+                "(@Lbl, @Clr) ";
+
             try {
                 using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
                     using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
                         cmd.CommandType = CommandType.Text;
-                        cmd.Parameters.AddWithValue("@Tit", Issu.Tit);
-                        cmd.Parameters.AddWithValue("@Txt", Issu.Txt);
-                        cmd.Parameters.AddWithValue("@St", Issu.St);
+                        cmd.Parameters.AddWithValue("@Lbl", Lbl.Lbl);
+                        cmd.Parameters.AddWithValue("@Clr", Lbl.Clr);
 
                         await cnx.OpenAsync();
                         var id = await cmd.ExecuteScalarAsync();
-                        Issu.IssuId = Convert.ToInt32(id);
+                        Lbl.LblId = Convert.ToInt32(id);
 
-                        return new ExeRslt(Issu.IssuId);
+                        return new ExeRslt(Lbl.LblId);
                     }
                 }
             } catch(Exception ex) {
@@ -43,15 +41,16 @@ namespace IssuMgr.API.DM {
                 ex.Data.Add("Method", Ext.GetCaller());
                 return new ExeRslt(-1, ex);
             }
+
         }
 
         public async Task<ExeRslt> Delete(int id) {
-            string lxQry = "DELETE [Issu] WHERE IssuId = @Id";
-            //TODO Borrar Labels asignados
+            string lxQry = "DELETE [Lbl] WHERE Id = @Id";
+
             try {
                 using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
                     using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
-                        cmd.Parameters.AddWithValue("@IsuuId", id);
+                        cmd.Parameters.AddWithValue("@Id", id);
                         cnx.Open();
                         int rows = await cmd.ExecuteNonQueryAsync();
                         return new ExeRslt(rows);
@@ -68,8 +67,8 @@ namespace IssuMgr.API.DM {
             DataTable lxDT = new DataTable();
             string lxQry =
                 "SELECT Id " +
-                "  FROM [Issu]" +
-                " WHERE IssuId = @id";
+                "  FROM [LblModel]" +
+                " WHERE Id = @id";
 
             try {
                 using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
@@ -78,7 +77,7 @@ namespace IssuMgr.API.DM {
 
                         SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
                         lxDA.Fill(lxDT);
-                        lxDT.TableName = "Issu";
+                        lxDT.TableName = "Lbl";
                     }
                 }
                 if(lxDT.Rows.Count > 0) {
@@ -91,11 +90,11 @@ namespace IssuMgr.API.DM {
             }
         }
 
-        public async Task<SnglRslt<IssuModel>> Get(int id) {
+        public async Task<SnglRslt<LblModel>> Get(int id) {
             DataTable lxDT = new DataTable();
             string lxQry =
-                "SELECT Id, Cod_IssuModel, Nom_IssuModel " +
-                "  FROM [Issu]" +
+                "SELECT Id, Cod_LblModel, Nom_LblModel " +
+                "  FROM [LblModel]" +
                 " WHERE Id = @id";
 
             try {
@@ -105,36 +104,35 @@ namespace IssuMgr.API.DM {
 
                         SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
                         lxDA.Fill(lxDT);
-                        lxDT.TableName = "Issu";
+                        lxDT.TableName = "Lbl";
                     }
                 }
                 if(lxDT.Rows.Count > 0) {
-                    IssuModel lbl = lxDT.Rows[0].ToRow<IssuModel>();
-                    return await Task.FromResult(new SnglRslt<IssuModel>(lbl));
+                    LblModel lbl = lxDT.Rows[0].ToRow<LblModel>();
+                    return await Task.FromResult(new SnglRslt<LblModel>(lbl));
                 } else {
                     return null;
                 }
             } catch(Exception ex) {
-                return new SnglRslt<IssuModel>(new IssuModel(), ex);
+                return new SnglRslt<LblModel>(new LblModel(), ex);
             }
         }
 
-        public async Task<IEnumerable<IssuModel>> GetAll() {
+        public async Task<IEnumerable<LblModel>> GetAll() {
             DataTable lxDT = new DataTable();
             string lxQry =
-                "SELECT IssuId, Tit, Txt, St, StmCre, StMdf " +
-                "  FROM [Issu]";
-            //TODO Subir los Labels Asignados
+                "SELECT LblId, Lbl, Clr " +
+                "  FROM [Lbl]";
             using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
                 using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
                     SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
                     lxDA.Fill(lxDT);
-                    lxDT.TableName = "Issu";
+                    lxDT.TableName = "Lbl";
                 }
             }
-            var Issus = lxDT.ToList<IssuModel>();
-            return await Task.FromResult(Issus);
-            //TODO: Manejo de error Issu GetAll
+            var Lbls = lxDT.ToList<LblModel>();
+            return await Task.FromResult(Lbls);
+            //TODO: Manejo de error
         }
 
         public string GetCnxStr() {
@@ -142,29 +140,25 @@ namespace IssuMgr.API.DM {
             return lxCnxStr;
         }
 
-        public async Task<ExeRslt> Update(int id, IssuModel Issu) {
-            string lxQry = "UPDATE [Issu] " +
+        public async Task<ExeRslt> Update(int id, LblModel Lbl) {
+            string lxQry = "UPDATE [Lbl] " +
                            "   SET " +
-                           "       Tit = @Tit," +
-                           "       Txt = @Txt," +
-                           "       St = @St," +
-                           "       StmMdf = @StmMdf " +
-                           " WHERE IssuId = @id";
+                           "       Lbl = @Lbl," +
+                           "       Clr = @Clr " +
+                           " WHERE LblId = @id";
             try {
                 using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
                     using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
                         cmd.CommandType = CommandType.Text;
-                        cmd.Parameters.AddWithValue("@Tit", Issu.Tit);
-                        cmd.Parameters.AddWithValue("@Txt", Issu.Txt);
-                        cmd.Parameters.AddWithValue("@St", Issu.St);
-                        cmd.Parameters.AddWithValue("@StmMdf", Issu.StmMdf);
-                        
-                        cmd.Parameters.AddWithValue("@IssuId", id);
+                        cmd.Parameters.AddWithValue("@Lbl", Lbl.Lbl);
+                        cmd.Parameters.AddWithValue("@Clr", Lbl.Clr);
+
+                        cmd.Parameters.AddWithValue("@Id", id);
 
                         await cnx.OpenAsync();
                         await cmd.ExecuteNonQueryAsync();
 
-                        return new ExeRslt(Issu.IssuId);
+                        return new ExeRslt(Lbl.LblId);
                     }
                 }
             } catch(Exception ex) {
