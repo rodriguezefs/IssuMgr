@@ -11,10 +11,14 @@ using System.Threading.Tasks;
 namespace IssuMgr.API.DM {
     public class LblDM: ILblDM {
         private readonly IConfiguration Cfg;
+
         public LblDM(IConfiguration cfg) {
             Cfg = cfg;
         }
+
         public async Task<ExeRslt> Create(LblModel Lbl) {
+            SqlTransaction trns = null;
+
             string lxQry =
                 "INSERT INTO [Lbl] " +
                 "(Lbl, Clr) " +
@@ -24,19 +28,29 @@ namespace IssuMgr.API.DM {
 
             try {
                 using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
-                    using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
+                    await cnx.OpenAsync();
+                    trns = cnx.BeginTransaction();
+
+                    using(SqlCommand cmd = new SqlCommand(lxQry, cnx, trns)) {
                         cmd.CommandType = CommandType.Text;
                         cmd.Parameters.AddWithValue("@Lbl", Lbl.Lbl);
                         cmd.Parameters.AddWithValue("@Clr", Lbl.Clr);
 
-                        await cnx.OpenAsync();
                         var id = await cmd.ExecuteScalarAsync();
                         Lbl.LblId = Convert.ToInt32(id);
+
+                        trns.Commit();
 
                         return new ExeRslt(Lbl.LblId);
                     }
                 }
             } catch(Exception ex) {
+                try {
+                    trns.Rollback();
+                } catch(Exception exr) {
+                    ex.Data.Add("Rollback", exr.Message);
+                }
+
                 ex.Data.Add("Qry", lxQry);
                 ex.Data.Add("Method", Ext.GetCaller());
                 return new ExeRslt(-1, ex);
@@ -45,18 +59,28 @@ namespace IssuMgr.API.DM {
         }
 
         public async Task<ExeRslt> Delete(int id) {
+            SqlTransaction trns = null;
+
             string lxQry = "DELETE [Lbl] WHERE Id = @Id";
 
             try {
                 using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
+                    await cnx.OpenAsync();
+                    trns = cnx.BeginTransaction();
+
                     using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
                         cmd.Parameters.AddWithValue("@Id", id);
-                        cnx.Open();
                         int rows = await cmd.ExecuteNonQueryAsync();
+                        trns.Commit();
                         return new ExeRslt(rows);
                     }
                 }
             } catch(Exception ex) {
+                try {
+                    trns.Rollback();
+                } catch(Exception exr) {
+                    ex.Data.Add("Rollback", exr.Message);
+                }
                 ex.Data.Add("Qry", lxQry);
                 ex.Data.Add("Method", Ext.GetCaller());
                 return new ExeRslt(-1, ex);
@@ -65,6 +89,7 @@ namespace IssuMgr.API.DM {
 
         public async Task<bool> Exists(int id) {
             DataTable lxDT = new DataTable();
+
             string lxQry =
                 "SELECT Id " +
                 "  FROM [LblModel]" +
@@ -120,9 +145,11 @@ namespace IssuMgr.API.DM {
 
         public async Task<IEnumerable<LblModel>> GetAll() {
             DataTable lxDT = new DataTable();
+
             string lxQry =
                 "SELECT LblId, Lbl, Clr " +
                 "  FROM [Lbl]";
+
             using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
                 using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
                     SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
@@ -141,6 +168,7 @@ namespace IssuMgr.API.DM {
         }
 
         public async Task<ExeRslt> Update(int id, LblModel Lbl) {
+            SqlTransaction trns = null;
             string lxQry = "UPDATE [Lbl] " +
                            "   SET " +
                            "       Lbl = @Lbl," +
@@ -148,6 +176,9 @@ namespace IssuMgr.API.DM {
                            " WHERE LblId = @id";
             try {
                 using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
+                    await cnx.OpenAsync();
+                    trns = cnx.BeginTransaction();
+
                     using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
                         cmd.CommandType = CommandType.Text;
                         cmd.Parameters.AddWithValue("@Lbl", Lbl.Lbl);
@@ -155,13 +186,17 @@ namespace IssuMgr.API.DM {
 
                         cmd.Parameters.AddWithValue("@Id", id);
 
-                        await cnx.OpenAsync();
                         await cmd.ExecuteNonQueryAsync();
-
+                        trns.Commit();
                         return new ExeRslt(Lbl.LblId);
                     }
                 }
             } catch(Exception ex) {
+                try {
+                    trns.Rollback();
+                } catch(Exception exr) {
+                    ex.Data.Add("Rollback", exr.Message);
+                }
                 ex.Data.Add("Qry", lxQry);
                 ex.Data.Add("Method", Ext.GetCaller());
                 return new ExeRslt(-1, ex);
