@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace IssuMgr.API.DM {
@@ -158,7 +159,7 @@ namespace IssuMgr.API.DM {
                         cmd.Parameters.AddWithValue("@Txt", Issu.Txt);
                         cmd.Parameters.AddWithValue("@St", Issu.St);
                         cmd.Parameters.AddWithValue("@StmMdf", Issu.StmMdf);
-                        
+
                         cmd.Parameters.AddWithValue("@IssuId", id);
 
                         await cnx.OpenAsync();
