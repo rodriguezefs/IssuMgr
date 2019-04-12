@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "IssuMgr.SQL", "IssuMgr.SQL\IssuMgr.SQL.sqlproj", "{37E673FB-92AC-4D6A-8B35-55853F99EDD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IssuMgr.Model", "IssuMgr.Model\IssuMgr.Model.csproj", "{14B0C7FF-7DCB-449C-A73D-C9F25BE0CB0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IssuMgr.Model", "IssuMgr.Model\IssuMgr.Model.csproj", "{14B0C7FF-7DCB-449C-A73D-C9F25BE0CB0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IssuMgr.API", "IssuMgr.API\IssuMgr.API.csproj", "{DE1B3857-5DF5-4B36-AF05-F391B338BFD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IssuMgr.API", "IssuMgr.API\IssuMgr.API.csproj", "{DE1B3857-5DF5-4B36-AF05-F391B338BFD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IssuMgr.Web", "IssuMgr.Web\IssuMgr.Web.csproj", "{AF96C07C-CC93-4977-BEC0-CE07B1828F9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{DE1B3857-5DF5-4B36-AF05-F391B338BFD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE1B3857-5DF5-4B36-AF05-F391B338BFD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE1B3857-5DF5-4B36-AF05-F391B338BFD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF96C07C-CC93-4977-BEC0-CE07B1828F9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF96C07C-CC93-4977-BEC0-CE07B1828F9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF96C07C-CC93-4977-BEC0-CE07B1828F9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF96C07C-CC93-4977-BEC0-CE07B1828F9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
