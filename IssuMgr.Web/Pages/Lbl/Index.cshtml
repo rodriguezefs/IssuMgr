@@ -1,0 +1,40 @@
+﻿@page
+@model IssuMgr.Web.Pages.Lbl.IndexModel
+@{
+    ViewData["Title"] = "Labels";
+}
+
+<h1>Labels (Etiquetas)</h1>
+
+<a asp-page="./Create">Nueva</a>
+<table class="table table-hover table-responsive">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Etiqueta
+            </th>
+            <th>
+                Color
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ var lxLbls = Model.Lbls.Lst; }
+        @foreach (var item in lxLbls)
+        {
+            <tr>
+                <td>@Html.DisplayFor(i => item.LblId)</td>
+                <td>@Html.DisplayFor(i => item.Lbl)</td>
+                <td><span style="background-color: @item.Clr">item.Lbl</span></td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.LblId">Edit</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.LblId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -6,8 +6,9 @@ using System.Runtime.CompilerServices;
 
 namespace IssuMgr.API.Util {
     public static class Ext {
+
         /// <summary>
-        /// Convierte un Datatable en un List<T>;
+        /// Convierte un Datatable en un List&lt;T&gt;
         /// </summary>
         /// <typeparam name="T">Objeto (clase) genérica</typeparam>
         /// <param name="dt">DataTable</param>
