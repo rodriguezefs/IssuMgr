@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IssuMgr.API.BO;
+using IssuMgr.API.BO.Interfaces;
+using IssuMgr.API.DM;
+using IssuMgr.API.DM.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -27,6 +31,9 @@ namespace IssuMgr.Web {
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // DI
+            services.AddTransient<ILblBO, LblBO>();
+            services.AddTransient<ILblDM, LblDM>();
 
             services.AddMvc()
                 .AddNewtonsoftJson();

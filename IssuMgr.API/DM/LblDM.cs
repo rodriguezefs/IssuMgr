@@ -110,7 +110,7 @@ namespace IssuMgr.API.DM {
                 } else {
                     return await Task.FromResult(false);
                 }
-            } catch(Exception ex) {
+            } catch(Exception) {
                 return await Task.FromResult(false);
             }
         }

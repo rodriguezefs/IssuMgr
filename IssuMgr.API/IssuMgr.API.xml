@@ -44,7 +44,14 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <!-- El comentario XML con formato incorrecto se ha omitido para el miembro "M:IssuMgr.API.Util.Ext.ToList``1(System.Data.DataTable)" -->
+        <member name="M:IssuMgr.API.Util.Ext.ToList``1(System.Data.DataTable)">
+            <summary>
+            Convierte un Datatable en un List&lt;T&gt;
+            </summary>
+            <typeparam name="T">Objeto (clase) genérica</typeparam>
+            <param name="dt">DataTable</param>
+            <returns></returns>
+        </member>
         <member name="M:IssuMgr.API.Util.Ext.ToRow``1(System.Data.DataRow)">
             <summary>
             Retorna un Objeto (clase) genérica basado en una DataRow
