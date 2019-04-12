@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IssuMgr.API.BO.Interfaces;
+using IssuMgr.API.Util;
 using IssuMgr.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,7 @@ namespace IssuMgr.API.Controllers {
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IEnumerable<LblModel>> GetAll() {
+        public async Task<LstRslt<LblModel>> GetAll() {
             var lxLstLbl = await LblBO.GetAll();
             
             return lxLstLbl;

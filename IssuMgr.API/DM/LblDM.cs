@@ -133,33 +133,43 @@ namespace IssuMgr.API.DM {
                     }
                 }
                 if(lxDT.Rows.Count > 0) {
-                    LblModel lbl = lxDT.Rows[0].ToRow<LblModel>();
-                    return await Task.FromResult(new SnglRslt<LblModel>(lbl));
+                    LblModel lxLbl = lxDT.Rows[0].ToRow<LblModel>();
+                    var lxRslt = new SnglRslt<LblModel>(lxLbl);
+                    return await Task.FromResult(lxRslt);
                 } else {
-                    return null;
+                    return new SnglRslt<LblModel>(new LblModel());
                 }
             } catch(Exception ex) {
                 return new SnglRslt<LblModel>(new LblModel(), ex);
             }
         }
 
-        public async Task<IEnumerable<LblModel>> GetAll() {
+        public async Task<LstRslt<LblModel>> GetAll() {
             DataTable lxDT = new DataTable();
 
             string lxQry =
                 "SELECT LblId, Lbl, Clr " +
                 "  FROM [Lbl]";
 
-            using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
-                using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
-                    SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
-                    lxDA.Fill(lxDT);
-                    lxDT.TableName = "Lbl";
+            try {
+                using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
+                    using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
+                        SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
+                        lxDA.Fill(lxDT);
+                        lxDT.TableName = "Lbl";
+                    }
                 }
+
+                if(lxDT.Rows.Count > 0) {
+                    List<LblModel> lxLbls = lxDT.ToList<LblModel>();
+                    var lxRslt = new LstRslt<LblModel>(lxLbls);
+                    return await Task.FromResult(lxRslt);
+                } else {
+                    return new LstRslt<LblModel>(new List<LblModel>());
+                }
+            } catch(Exception ex) {
+                return new LstRslt<LblModel>(new List<LblModel>(), ex);
             }
-            var Lbls = lxDT.ToList<LblModel>();
-            return await Task.FromResult(Lbls);
-            //TODO: Manejo de error
         }
 
         public string GetCnxStr() {

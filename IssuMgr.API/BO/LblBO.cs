@@ -28,7 +28,7 @@ namespace IssuMgr.API.BO {
             return LblDM.Get(id);
         }
 
-        public Task<IEnumerable<LblModel>> GetAll() {
+        public Task<LstRslt<LblModel>> GetAll() {
             return LblDM.GetAll();
         }
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IssuMgr.API.BO.Interfaces {
     public interface ILblBO {
-        Task<IEnumerable<LblModel>> GetAll();
+        Task<LstRslt<LblModel>> GetAll();
         Task<SnglRslt<LblModel>> Get(int id);
         Task<ExeRslt> Create(LblModel Lbl);
         Task<bool> Exists(int id);
