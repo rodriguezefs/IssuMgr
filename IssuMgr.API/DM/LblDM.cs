@@ -61,15 +61,15 @@ namespace IssuMgr.API.DM {
         public async Task<ExeRslt> Delete(int id) {
             SqlTransaction trns = null;
 
-            string lxQry = "DELETE [Lbl] WHERE Id = @Id";
+            string lxQry = "DELETE [Lbl] WHERE LblId = @LblId";
 
             try {
                 using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
                     await cnx.OpenAsync();
                     trns = cnx.BeginTransaction();
 
-                    using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
-                        cmd.Parameters.AddWithValue("@Id", id);
+                    using(SqlCommand cmd = new SqlCommand(lxQry, cnx, trns)) {
+                        cmd.Parameters.AddWithValue("@LblId", id);
                         int rows = await cmd.ExecuteNonQueryAsync();
                         trns.Commit();
                         return new ExeRslt(rows);
@@ -91,14 +91,14 @@ namespace IssuMgr.API.DM {
             DataTable lxDT = new DataTable();
 
             string lxQry =
-                "SELECT Id " +
-                "  FROM [LblModel]" +
-                " WHERE Id = @id";
+                "SELECT LblId " +
+                "  FROM [Lbl] " +
+                " WHERE LblId = @LblId";
 
             try {
                 using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
                     using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
-                        cmd.Parameters.AddWithValue("Id", id);
+                        cmd.Parameters.AddWithValue("LblId", id);
 
                         SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
                         lxDA.Fill(lxDT);
@@ -110,7 +110,7 @@ namespace IssuMgr.API.DM {
                 } else {
                     return await Task.FromResult(false);
                 }
-            } catch(Exception) {
+            } catch(Exception ex) {
                 return await Task.FromResult(false);
             }
         }
@@ -118,14 +118,14 @@ namespace IssuMgr.API.DM {
         public async Task<SnglRslt<LblModel>> Get(int id) {
             DataTable lxDT = new DataTable();
             string lxQry =
-                "SELECT Id, Cod_LblModel, Nom_LblModel " +
-                "  FROM [LblModel]" +
-                " WHERE Id = @id";
+                "SELECT LblId, Lbl, Clr " +
+                "  FROM [Lbl]" +
+                " WHERE LblId = @LblId";
 
             try {
                 using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
                     using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
-                        cmd.Parameters.AddWithValue("Id", id);
+                        cmd.Parameters.AddWithValue("LblId", id);
 
                         SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
                         lxDA.Fill(lxDT);
@@ -173,18 +173,18 @@ namespace IssuMgr.API.DM {
                            "   SET " +
                            "       Lbl = @Lbl," +
                            "       Clr = @Clr " +
-                           " WHERE LblId = @id";
+                           " WHERE LblId = @LblId";
             try {
                 using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
                     await cnx.OpenAsync();
                     trns = cnx.BeginTransaction();
 
-                    using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
+                    using(SqlCommand cmd = new SqlCommand(lxQry, cnx, trns)) {
                         cmd.CommandType = CommandType.Text;
                         cmd.Parameters.AddWithValue("@Lbl", Lbl.Lbl);
                         cmd.Parameters.AddWithValue("@Clr", Lbl.Clr);
 
-                        cmd.Parameters.AddWithValue("@Id", id);
+                        cmd.Parameters.AddWithValue("@LblId", id);
 
                         await cmd.ExecuteNonQueryAsync();
                         trns.Commit();

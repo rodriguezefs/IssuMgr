@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using IssuMgr.API.BO;
 using IssuMgr.API.BO.Interfaces;
@@ -34,7 +36,19 @@ namespace IssuMgr.API {
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Issue Manager API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info {
+                    Title = "Issue Manager API",
+                    Version = "v1",
+                    Description = "API para Issue Manager",
+                    Contact = new Contact {
+                        Name = "Eliseo Rodriguez",
+                        Email = "eliseo_rodriguez@latisinformatica.com",
+                        Url = "htts://www.latisinformatica.com"
+                    }
+                });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         }
 

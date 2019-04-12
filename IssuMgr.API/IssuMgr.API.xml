@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IssuMgr.API</name>
+    </assembly>
+    <members>
+        <member name="T:IssuMgr.API.Controllers.LblController">
+            <summary>
+            Labels etiques para los Issues
+            </summary>
+        </member>
+        <member name="M:IssuMgr.API.Controllers.LblController.GetAll">
+            <summary>
+            Retorna todos los "Labels" disponibles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IssuMgr.API.Controllers.LblController.Get(System.Int32)">
+            <summary>
+            Retorna un Label con un Id específico
+            </summary>
+            <param name="id">Id del Lable a consultar</param>
+            <returns></returns>
+        </member>
+        <member name="M:IssuMgr.API.Controllers.LblController.Post(IssuMgr.Model.LblModel)">
+            <summary>
+            Crear (Insertar) un Label
+            </summary>
+            <param name="lbl">Información de Model del Label</param>
+            <returns></returns>
+        </member>
+        <member name="M:IssuMgr.API.Controllers.LblController.Put(System.Int32,IssuMgr.Model.LblModel)">
+            <summary>
+            Actualizar (Update) la información de un Label específico
+            </summary>
+            <param name="id">Id del Label</param>
+            <param name="lbl">Información de Model del Label</param>
+            <returns></returns>
+        </member>
+        <member name="M:IssuMgr.API.Controllers.LblController.Delete(System.Int32)">
+            <summary>
+            Borrar un Label según su Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <!-- El comentario XML con formato incorrecto se ha omitido para el miembro "M:IssuMgr.API.Util.Ext.ToList``1(System.Data.DataTable)" -->
+        <member name="M:IssuMgr.API.Util.Ext.ToRow``1(System.Data.DataRow)">
+            <summary>
+            Retorna un Objeto (clase) genérica basado en una DataRow
+            </summary>
+            <typeparam name="T">Objeto</typeparam>
+            <param name="dr">DataRow</param>
+            <returns></returns>
+        </member>
+        <member name="M:IssuMgr.API.Util.Ext.GetCaller(System.String)">
+            <summary>
+            Retorna el nombre del miembro actual (método) de una clase
+            </summary>
+            <param name="memberName"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
