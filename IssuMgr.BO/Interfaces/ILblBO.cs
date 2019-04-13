@@ -1,11 +1,7 @@
-﻿using IssuMgr.API.Util;
-using IssuMgr.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using IssuMgr.Model;
 using System.Threading.Tasks;
 
-namespace IssuMgr.API.BO.Interfaces {
+namespace IssuMgr.BO.Interfaces {
     public interface ILblBO {
         Task<LstRslt<LblModel>> GetAll();
         Task<SnglRslt<LblModel>> Get(int id);

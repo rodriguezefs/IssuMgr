@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IssuMgr.API.Util {
+namespace IssuMgr.Model {
     public class ExeRslt {
         public ExeRslt() {
         }

@@ -68,4 +68,7 @@
   <ItemGroup>
     <RefactorLog Include="IssuMgr.SQL.refactorlog" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="IssuMgr.SQL.publish.xml" />
+  </ItemGroup>
 </Project>

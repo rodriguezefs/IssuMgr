@@ -1,0 +1,8 @@
+﻿@{
+    if (TempData["MsgErr"] != null) {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>@Html.Raw(TempData["MsgErr"])</p>
+        </div>
+    }
+}

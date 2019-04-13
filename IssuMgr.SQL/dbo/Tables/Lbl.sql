@@ -2,5 +2,6 @@
 (
 	[LblId] INT NOT NULL PRIMARY KEY IDENTITY (1,1), 
     [Lbl] NCHAR(100) NOT NULL, 
+	[BkClr] NCHAR(6) NOT NULL,
     [Clr] NCHAR(6) NOT NULL
 )

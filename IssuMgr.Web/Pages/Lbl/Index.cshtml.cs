@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IssuMgr.API.BO;
-using IssuMgr.API.BO.Interfaces;
-using IssuMgr.API.Util;
+﻿using IssuMgr.BO.Interfaces;
 using IssuMgr.Model;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
 
 namespace IssuMgr.Web.Pages.Lbl {
     public class IndexModel: PageModel {
@@ -16,9 +10,14 @@ namespace IssuMgr.Web.Pages.Lbl {
             LblBO = lblBO;
         }
 
-        public LstRslt<LblModel> Lbls { get; set; }
+        public List<LblModel> Lbls { get; set; }
         public async void OnGet() {
-            Lbls = await LblBO.GetAll();
+            var lxRslt = await LblBO.GetAll();
+
+            if(lxRslt.Err != null) {
+                TempData["MsgErr"] = lxRslt.Err.Message;
+            }
+            Lbls = lxRslt.Lst;
         }
     }
 }

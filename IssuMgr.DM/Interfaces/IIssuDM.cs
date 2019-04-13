@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using IssuMgr.Model;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using IssuMgr.API.Util;
-using IssuMgr.Model;
 
 namespace IssuMgr.API.DM.Interfaces {
     public interface IIssuDM {

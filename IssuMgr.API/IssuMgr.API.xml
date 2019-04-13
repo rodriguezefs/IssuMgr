@@ -44,28 +44,5 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:IssuMgr.API.Util.Ext.ToList``1(System.Data.DataTable)">
-            <summary>
-            Convierte un Datatable en un List&lt;T&gt;
-            </summary>
-            <typeparam name="T">Objeto (clase) genérica</typeparam>
-            <param name="dt">DataTable</param>
-            <returns></returns>
-        </member>
-        <member name="M:IssuMgr.API.Util.Ext.ToRow``1(System.Data.DataRow)">
-            <summary>
-            Retorna un Objeto (clase) genérica basado en una DataRow
-            </summary>
-            <typeparam name="T">Objeto</typeparam>
-            <param name="dr">DataRow</param>
-            <returns></returns>
-        </member>
-        <member name="M:IssuMgr.API.Util.Ext.GetCaller(System.String)">
-            <summary>
-            Retorna el nombre del miembro actual (método) de una clase
-            </summary>
-            <param name="memberName"></param>
-            <returns></returns>
-        </member>
     </members>
 </doc>

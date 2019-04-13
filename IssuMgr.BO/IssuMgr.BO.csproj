@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IssuMgr.DM\IssuMgr.DM.csproj" />
+    <ProjectReference Include="..\IssuMgr.Model\IssuMgr.Model.csproj" />
+  </ItemGroup>
+
+</Project>

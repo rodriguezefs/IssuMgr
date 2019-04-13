@@ -4,7 +4,7 @@ using System.Data;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace IssuMgr.API.Util {
+namespace IssuMgr.Util {
     public static class Ext {
 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿using IssuMgr.API.DM.Interfaces;
-using IssuMgr.API.Util;
 using IssuMgr.Model;
+using IssuMgr.Util;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
-namespace IssuMgr.API.DM {
+namespace IssuMgr.DM {
     public class LblDM: ILblDM {
         private readonly IConfiguration Cfg;
 
@@ -21,7 +21,7 @@ namespace IssuMgr.API.DM {
 
             string lxQry =
                 "INSERT INTO [Lbl] " +
-                "(Lbl, Clr) " +
+                "(Lbl, BkClr, Clr) " +
                 "OUTPUT Inserted.LblId " +
                 "VALUES " +
                 "(@Lbl, @Clr) ";
@@ -34,6 +34,7 @@ namespace IssuMgr.API.DM {
                     using(SqlCommand cmd = new SqlCommand(lxQry, cnx, trns)) {
                         cmd.CommandType = CommandType.Text;
                         cmd.Parameters.AddWithValue("@Lbl", Lbl.Lbl);
+                        cmd.Parameters.AddWithValue("@BkClr", Lbl.BkClr);
                         cmd.Parameters.AddWithValue("@Clr", Lbl.Clr);
 
                         var id = await cmd.ExecuteScalarAsync();
@@ -118,7 +119,7 @@ namespace IssuMgr.API.DM {
         public async Task<SnglRslt<LblModel>> Get(int id) {
             DataTable lxDT = new DataTable();
             string lxQry =
-                "SELECT LblId, Lbl, Clr " +
+                "SELECT LblId, Lbl, BkClr, Clr " +
                 "  FROM [Lbl]" +
                 " WHERE LblId = @LblId";
 
@@ -148,7 +149,7 @@ namespace IssuMgr.API.DM {
             DataTable lxDT = new DataTable();
 
             string lxQry =
-                "SELECT LblId, Lbl, Clr " +
+                "SELECT LblId, Lbl, BkClr, Clr " +
                 "  FROM [Lbl]";
 
             try {
@@ -182,6 +183,7 @@ namespace IssuMgr.API.DM {
             string lxQry = "UPDATE [Lbl] " +
                            "   SET " +
                            "       Lbl = @Lbl," +
+                           "       BkClr = @BkClr " +
                            "       Clr = @Clr " +
                            " WHERE LblId = @LblId";
             try {
@@ -192,6 +194,7 @@ namespace IssuMgr.API.DM {
                     using(SqlCommand cmd = new SqlCommand(lxQry, cnx, trns)) {
                         cmd.CommandType = CommandType.Text;
                         cmd.Parameters.AddWithValue("@Lbl", Lbl.Lbl);
+                        cmd.Parameters.AddWithValue("@BkClr", Lbl.BkClr);
                         cmd.Parameters.AddWithValue("@Clr", Lbl.Clr);
 
                         cmd.Parameters.AddWithValue("@LblId", id);

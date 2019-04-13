@@ -1,6 +1,6 @@
 ﻿using IssuMgr.API.DM.Interfaces;
-using IssuMgr.API.Util;
 using IssuMgr.Model;
+using IssuMgr.Util;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IssuMgr.API.DM {
+namespace IssuMgr.DM {
     public class IssuDM: IIssuDM {
         private readonly IConfiguration Cfg;
         public IssuDM(IConfiguration cfg) {

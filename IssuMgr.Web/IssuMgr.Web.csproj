@@ -18,7 +18,7 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\IssuMgr.API\IssuMgr.API.csproj" />
+    <ProjectReference Include="..\IssuMgr.BO\IssuMgr.BO.csproj" />
     <ProjectReference Include="..\IssuMgr.Model\IssuMgr.Model.csproj" />
   </ItemGroup>
 

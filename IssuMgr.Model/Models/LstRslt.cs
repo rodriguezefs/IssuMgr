@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace IssuMgr.API.Util {
+namespace IssuMgr.Model {
     public class LstRslt<T> where T : class {
         public LstRslt() { }
 

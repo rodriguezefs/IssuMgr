@@ -1,12 +1,9 @@
-﻿using IssuMgr.API.BO.Interfaces;
-using IssuMgr.API.DM.Interfaces;
-using IssuMgr.API.Util;
+﻿using IssuMgr.API.DM.Interfaces;
+using IssuMgr.BO.Interfaces;
 using IssuMgr.Model;
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace IssuMgr.API.BO {
+namespace IssuMgr.BO {
     public class LblBO: ILblBO {
         private readonly ILblDM LblDM;
         public LblBO(ILblDM lblDM) {

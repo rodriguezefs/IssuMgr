@@ -9,7 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IssuMgr.Model", "IssuMgr.Mo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IssuMgr.API", "IssuMgr.API\IssuMgr.API.csproj", "{DE1B3857-5DF5-4B36-AF05-F391B338BFD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IssuMgr.Web", "IssuMgr.Web\IssuMgr.Web.csproj", "{AF96C07C-CC93-4977-BEC0-CE07B1828F9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IssuMgr.Web", "IssuMgr.Web\IssuMgr.Web.csproj", "{AF96C07C-CC93-4977-BEC0-CE07B1828F9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IssuMgr.BO", "IssuMgr.BO\IssuMgr.BO.csproj", "{8441D465-2CED-489E-95A0-1E438E98CEEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IssuMgr.DM", "IssuMgr.DM\IssuMgr.DM.csproj", "{545136B7-EA4D-49E4-B876-751E53CCF844}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +39,14 @@ Global
 		{AF96C07C-CC93-4977-BEC0-CE07B1828F9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF96C07C-CC93-4977-BEC0-CE07B1828F9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF96C07C-CC93-4977-BEC0-CE07B1828F9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8441D465-2CED-489E-95A0-1E438E98CEEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8441D465-2CED-489E-95A0-1E438E98CEEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8441D465-2CED-489E-95A0-1E438E98CEEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8441D465-2CED-489E-95A0-1E438E98CEEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{545136B7-EA4D-49E4-B876-751E53CCF844}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{545136B7-EA4D-49E4-B876-751E53CCF844}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{545136B7-EA4D-49E4-B876-751E53CCF844}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{545136B7-EA4D-49E4-B876-751E53CCF844}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

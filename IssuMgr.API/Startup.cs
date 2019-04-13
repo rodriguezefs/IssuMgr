@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using IssuMgr.API.BO;
-using IssuMgr.API.BO.Interfaces;
-using IssuMgr.API.DM;
-using IssuMgr.API.DM.Interfaces;
+﻿using IssuMgr.API.DM.Interfaces;
+using IssuMgr.BO;
+using IssuMgr.BO.Interfaces;
+using IssuMgr.DM;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace IssuMgr.API {
     public class Startup {
@@ -34,8 +28,7 @@ namespace IssuMgr.API {
             services.AddTransient<ILblBO, LblBO>();
             services.AddTransient<ILblDM, LblDM>();
 
-            services.AddSwaggerGen(c =>
-            {
+            services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new Info {
                     Title = "Issue Manager API",
                     Version = "v1",
@@ -63,8 +56,7 @@ namespace IssuMgr.API {
 
             app.UseHttpsRedirection();
             app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
+            app.UseSwaggerUI(c => {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Issue Manager API V1");
             });
             app.UseMvc();

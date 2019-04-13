@@ -1,6 +1,4 @@
-﻿using IssuMgr.API.Util;
-using IssuMgr.Model;
-using System.Collections.Generic;
+﻿using IssuMgr.Model;
 using System.Threading.Tasks;
 
 namespace IssuMgr.API.DM.Interfaces {

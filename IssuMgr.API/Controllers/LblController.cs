@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IssuMgr.API.BO.Interfaces;
-using IssuMgr.API.Util;
+﻿using IssuMgr.BO.Interfaces;
 using IssuMgr.Model;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace IssuMgr.API.Controllers {
     /// <summary>
@@ -28,7 +23,7 @@ namespace IssuMgr.API.Controllers {
         [HttpGet]
         public async Task<LstRslt<LblModel>> GetAll() {
             var lxLstLbl = await LblBO.GetAll();
-            
+
             return lxLstLbl;
         }
 
