@@ -8,7 +8,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
-    <DocumentationFile>C:\Users\rodri\source\Core\IssuMgr\IssuMgr.API\IssuMgr.API.xml</DocumentationFile>
+    <DocumentationFile>C:\Users\ER\source\Core\IssuMgr\IssuMgr.API\IssuMgr.API.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
