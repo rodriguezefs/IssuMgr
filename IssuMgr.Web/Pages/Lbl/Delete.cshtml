@@ -1,0 +1,37 @@
+﻿@page "{id:int}"
+@model IssuMgr.Web.Pages.Lbl.DeleteModel
+@{
+    ViewData["Title"] = "Eliminar";
+}
+
+<h1>Eliminar</h1>
+
+<h4>Eliminar Label?</h4>
+
+<table class="table table-hover table-responsive">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Etiqueta
+            </th>
+            <th>
+                Color
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <p>@Lbl.DeleteModel.</p>
+        <tr>
+            <td>@Html.DisplayFor(i => Model.LblId)</td>
+            <td>@Html.DisplayFor(i => Model.Lbl)</td>
+            <td>#@Html.DisplayFor(i => Model.Clr)</td>
+            <td><span style="background-color: #@Model.Clr;">@Model.Lbl</span></td>
+        </tr>
+
+    </tbody>
+</table>
