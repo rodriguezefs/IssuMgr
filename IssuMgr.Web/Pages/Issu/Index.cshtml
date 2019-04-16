@@ -1,0 +1,35 @@
+﻿@page
+@model IssuMgr.Web.Pages.Issu.IndexModel
+@{
+    ViewData["Title"] = "Issues";
+}
+<h1>Labels (Etiquetas)</h1>
+
+<a asp-page="./Create" class="btn btn-primary">Nueva</a>
+<br />
+<partial name="Shared/_MsgErr" />
+<table class="table table-hover table-responsive">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Etiqueta
+            </th>
+            <th>
+                BkColor
+            </th>
+            <th>
+                Color
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+
+
+</table>
