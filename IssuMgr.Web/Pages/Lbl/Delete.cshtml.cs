@@ -26,13 +26,13 @@ namespace IssuMgr.Web.Pages.Lbl {
             return Page();
         }
 
-        public async Task<ActionResult> OnPost(int id) {
-            var lxRslt = await LblBO.Delete(id);
+        public async Task<ActionResult> OnPost(int LblId) {
+            var lxRslt = await LblBO.Delete(LblId);
 
             if(lxRslt.Err != null) {
                 TempData["MsgErr"] = lxRslt.Err.Message;
 
-                return Page();
+                return RedirectToPage("./Index");
             }
 
             return RedirectToPage("./Index");

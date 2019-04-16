@@ -9,19 +9,20 @@
 <h4>Eliminar Label?</h4>
 
 <form asp-action="Delete">
-    <dl class="table table-hover table-responsive">
-
-        <dt>Id</dt>
-        <dd>@Html.DisplayFor(i => Model.Lbl.LblId)</dd>
-        <dt>Lbl</dt>
-        <dd>@Html.DisplayFor(i => Model.Lbl.Lbl)</dd>
-        <dt>BkClr</dt>
-        <dd>#@Html.DisplayFor(i => Model.Lbl.BkClr)</dd>
-        <dt>Clr</dt>
-        <dd>#@Html.DisplayFor(i => Model.Lbl.Clr)</dd>
-        <dt>Ej</dt>
-        <dd><span style="background-color: #@Model.Lbl.BkClr;">@Model.Lbl</span></dd>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Id</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(i => Model.Lbl.LblId)</dd>
+        <dt class="col-sm-2">Lbl</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(i => Model.Lbl.Lbl)</dd>
+        <dt class="col-sm-2">BkClr</dt>
+        <dd class="col-sm-10">#@Html.DisplayFor(i => Model.Lbl.BkClr)</dd>
+        <dt class="col-sm-2">Clr</dt>
+        <dd class="col-sm-10">#@Html.DisplayFor(i => Model.Lbl.Clr)</dd>
+        <dt class="col-sm-2">Ej</dt>
+        <dd class="col-sm-10"><span style="background-color: #@Model.Lbl.BkClr;">@Model.Lbl.Lbl</span></dd>
     </dl>
-    <input type="hidden" name="LblId" value="Model.Lbl.LblId"/>
+    <hr />
+    <input type="hidden" name="LblId" value="@Model.Lbl.LblId" />
     <input type="submit" value="Confirmar" class="btn btn-default btn-delete" />
 </form>
