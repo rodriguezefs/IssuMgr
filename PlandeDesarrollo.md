@@ -27,7 +27,7 @@
 - [ ] Client Validation (??)
 - [ ] AsgBO
 - [ ] IssuBO
-- [ ] LblBO
+- [x] LblBO
 
 ## Data Layer
 - [ ] AsgDM

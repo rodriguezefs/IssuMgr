@@ -31,7 +31,7 @@ namespace IssuMgr.Web.Pages.Lbl {
             //    return Page();
             //}
 
-            var lxRslt = await LblBO.Update(id, Lbl);
+            ExeRslt lxRslt = await LblBO.Update(id, Lbl);
 
             if(lxRslt.Err != null) {
                 TempData["MsgErr"] = lxRslt.Err.Message;
