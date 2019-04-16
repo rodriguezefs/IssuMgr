@@ -24,7 +24,7 @@ namespace IssuMgr.DM {
                 "(Lbl, BkClr, Clr) " +
                 "OUTPUT Inserted.LblId " +
                 "VALUES " +
-                "(@Lbl, @Clr) ";
+                "(@Lbl, @BkClr, @Clr) ";
 
             try {
                 using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
@@ -183,7 +183,7 @@ namespace IssuMgr.DM {
             string lxQry = "UPDATE [Lbl] " +
                            "   SET " +
                            "       Lbl = @Lbl," +
-                           "       BkClr = @BkClr " +
+                           "       BkClr = @BkClr, " +
                            "       Clr = @Clr " +
                            " WHERE LblId = @LblId";
             try {

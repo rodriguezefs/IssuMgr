@@ -9,7 +9,6 @@ namespace IssuMgr.Web.Pages.Lbl {
         public IndexModel(ILblBO lblBO) {
             LblBO = lblBO;
         }
-
         public List<LblModel> Lbls { get; set; }
         public async void OnGet() {
             var lxRslt = await LblBO.GetAll();

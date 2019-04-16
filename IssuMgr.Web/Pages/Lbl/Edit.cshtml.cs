@@ -20,6 +20,9 @@ namespace IssuMgr.Web.Pages.Lbl {
 
                 return Page();
             }
+
+            Lbl = lxRslt.Sngl;
+
             return Page();
         }
 
@@ -32,7 +35,6 @@ namespace IssuMgr.Web.Pages.Lbl {
 
             if(lxRslt.Err != null) {
                 TempData["MsgErr"] = lxRslt.Err.Message;
-
                 return Page();
             }
 
