@@ -1,4 +1,4 @@
-﻿@*@page "{id:int}"
+﻿@page
 @model IssuMgr.Web.Pages.Lbl.DeleteModel
 @{
     ViewData["Title"] = "Eliminar";
@@ -8,30 +8,20 @@
 
 <h4>Eliminar Label?</h4>
 
-<table class="table table-hover table-responsive">
-    <thead>
-        <tr>
-            <th>
-                Id
-            </th>
-            <th>
-                Etiqueta
-            </th>
-            <th>
-                Color
-            </th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <p>@Lbl.DeleteModel.</p>
-        <tr>
-            <td>@Html.DisplayFor(i => Model.LblId)</td>
-            <td>@Html.DisplayFor(i => Model.Lbl)</td>
-            <td>#@Html.DisplayFor(i => Model.Clr)</td>
-            <td><span style="background-color: #@Model.Clr;">@Model.Lbl</span></td>
-        </tr>
+<form asp-action="Delete">
+    <dl class="table table-hover table-responsive">
 
-    </tbody>
-</table>*@
+        <dt>Id</dt>
+        <dd>@Html.DisplayFor(i => Model.Lbl.LblId)</dd>
+        <dt>Lbl</dt>
+        <dd>@Html.DisplayFor(i => Model.Lbl.Lbl)</dd>
+        <dt>BkClr</dt>
+        <dd>#@Html.DisplayFor(i => Model.Lbl.BkClr)</dd>
+        <dt>Clr</dt>
+        <dd>#@Html.DisplayFor(i => Model.Lbl.Clr)</dd>
+        <dt>Ej</dt>
+        <dd><span style="background-color: #@Model.Lbl.BkClr;">@Model.Lbl</span></dd>
+    </dl>
+    <input type="hidden" name="LblId" value="Model.Lbl.LblId"/>
+    <input type="submit" value="Confirmar" class="btn btn-default btn-delete" />
+</form>
