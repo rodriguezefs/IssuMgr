@@ -121,19 +121,48 @@ namespace IssuMgr.DM {
         }
 
         public async Task<IEnumerable<IssuModel>> GetAll() {
-            DataTable lxDT = new DataTable();
-            string lxQry =
+            DataSet lxDS = new DataSet();
+            
+            string lxQryI =
                 "SELECT IssuId, Tit, Txt, St, StmCre, StMdf " +
-                "  FROM [Issu]";
-            //TODO Subir los Labels Asignados
+                "  FROM [Issu] I";
+
+            string lxQryLxI =
+                "SELECT IssuId, LblId " +
+                " FROM [LblxIssu]";
+
+            string lxQryL = 
+                "SELECT LblId, Lbl, BkClr, Clr " +
+                "  FROM [Lbl]";
+
             using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
-                using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
+                using(SqlCommand cmd = new SqlCommand(lxQryI, cnx)) {
                     SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
-                    lxDA.Fill(lxDT);
-                    lxDT.TableName = "Issu";
+                    lxDA.Fill(lxDS, "Issu");
                 }
+                using(SqlCommand cmd = new SqlCommand(lxQryLxI, cnx)) {
+                    SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
+                    lxDA.Fill(lxDS, "LblxIssu");
+                }
+                using(SqlCommand cmd = new SqlCommand(lxQryL, cnx)) {
+                    SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
+                    lxDA.Fill(lxDS, "Lbl");
+                }
+
+                DataColumn lxColIssuIdM = lxDS.Tables["Issu"].Columns["IssuId"];
+                DataColumn lxColIssuIdD = lxDS.Tables["LblxIssu"].Columns["IssuId"];
+                DataRelation lxI_LxI = new DataRelation("Issu_LblxIssu", lxColIssuIdM, lxColIssuIdD);
+
+                lxDS.Relations.Add(lxI_LxI);
+
+                DataColumn lxColLblIdM = lxDS.Tables["Lbl"].Columns["LblId"];
+                DataColumn lxColLblIdD = lxDS.Tables["LblxIssu"].Columns["LblId"];
+                DataRelation lxL_LxI = new DataRelation("Lbl_LblxIssu", lxColLblIdM, lxColLblIdD);
+
+                lxDS.Relations.Add(lxL_LxI);
+
             }
-            var Issus = lxDT.ToList<IssuModel>();
+            var Issus = lxDS.ToList<IssuModel>();
             return await Task.FromResult(Issus);
             //TODO: Manejo de error Issu GetAll
         }
