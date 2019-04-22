@@ -8,7 +8,8 @@ namespace IssuMgr.API.DM.Interfaces {
         Task<ExeRslt> Delete(int id);
         Task<bool> Exists(int id);
         Task<SnglRslt<IssuModel>> Get(int id);
-        Task<IEnumerable<IssuModel>> GetAll();
+        Task<LstRslt<IssuModel>> GetAll();
+        Task<LstRslt<LblModel>> GetAllLbl();
         string GetCnxStr();
         Task<ExeRslt> Update(int id, IssuModel Issu);
     }

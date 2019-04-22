@@ -128,13 +128,11 @@ namespace IssuMgr.DM {
                 "  FROM [Issu] I";
 
             string lxQryLxI =
-                "SELECT IssuId, LblId " +
-                " FROM [LblxIssu] " +
-                " LEFT ;
+                "SELECT LxI.IssuId, LxI.LblId, L.Lbl, L.BkClr, L.Clr " +
+                " FROM [LblxIssu] LxI " +
+                " LEFT JOIN [Lbl] L " +
+                "   ON L.LblId = LxI.LblId";
 
-            string lxQryL =
-                "SELECT LblId, Lbl, BkClr, Clr " +
-                "  FROM [Lbl]";
             try {
                 using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
                     using(SqlCommand cmd = new SqlCommand(lxQryI, cnx)) {
@@ -145,31 +143,53 @@ namespace IssuMgr.DM {
                         SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
                         lxDA.Fill(lxDS, "LblxIssu");
                     }
-                    using(SqlCommand cmd = new SqlCommand(lxQryL, cnx)) {
-                        SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
-                        lxDA.Fill(lxDS, "Lbl");
-                    }
-
+            
                     DataColumn lxColIssuIdM = lxDS.Tables["Issu"].Columns["IssuId"];
                     DataColumn lxColIssuIdD = lxDS.Tables["LblxIssu"].Columns["IssuId"];
                     DataRelation lxI_LxI = new DataRelation("Issu_LblxIssu", lxColIssuIdM, lxColIssuIdD);
-
                     lxDS.Relations.Add(lxI_LxI);
 
                     DataColumn lxColLblIdM = lxDS.Tables["Lbl"].Columns["LblId"];
                     DataColumn lxColLblIdD = lxDS.Tables["LblxIssu"].Columns["LblId"];
                     DataRelation lxL_LxI = new DataRelation("Lbl_LblxIssu", lxColLblIdM, lxColLblIdD);
-
                     lxDS.Relations.Add(lxL_LxI);
-
                 }
+                var lxRslt = new LstRslt<IssuModel>();
                 if(lxDS.Tables["Issu"].Rows.Count > 0) {
                     var lxIssus = lxDS.Tables["Issu"].ToList<IssuModel>();
-                    var lxRslt = new LstRslt<IssuModel>(lxIssus);
-                    return await Task.FromResult(lxRslt);
+                    lxRslt = new LstRslt<IssuModel>(lxIssus);
                 }
+                return await Task.FromResult(lxRslt);
             } catch(Exception ex) {
                 return new LstRslt<IssuModel>(new List<IssuModel>(), ex);
+            }
+        }
+
+        public async Task<LstRslt<LblModel>> GetAllLbl() {
+            DataTable lxDT = new DataTable();
+
+            string lxQry =
+                "SELECT LblId, Lbl, BkClr, Clr " +
+                "  FROM [Lbl]";
+
+            try {
+                using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
+                    using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
+                        SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
+                        lxDA.Fill(lxDT);
+                        lxDT.TableName = "Lbl";
+                    }
+                }
+
+                if(lxDT.Rows.Count > 0) {
+                    List<LblModel> lxLbls = lxDT.ToList<LblModel>();
+                    var lxRslt = new LstRslt<LblModel>(lxLbls);
+                    return await Task.FromResult(lxRslt);
+                } else {
+                    return new LstRslt<LblModel>(new List<LblModel>());
+                }
+            } catch(Exception ex) {
+                return new LstRslt<LblModel>(new List<LblModel>(), ex);
             }
         }
 

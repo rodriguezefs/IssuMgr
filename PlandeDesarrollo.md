@@ -3,20 +3,21 @@
 ## User Interface
 
 #### IssuMgr.Web
-- [ ] Login usando Identity
-- [ ] Localización
-- [ ] Client Validation (??)
-- [ ] Asg (Asignado)
-- [ ] Issu (Issue)
-  - [ ] Create
-  - [ ] Edit
-  - [ ] Delete
-  - [ ] Index
 - [ ] Lbl (Etiqueta)
   - [x] Create
   - [x] Edit
   - [ ] Delete
   - [x] Index
+- [ ] Issu (Issue)
+  - [ ] Create
+  - [ ] Edit
+  - [ ] Delete
+  - [ ] Index
+- [ ] Asg (Asignado)
+- [ ] Localización
+- [ ] Client Validation (??)
+- [ ] Mover DI de los DM del proyecto Web al BO
+- [ ] Login usando Identity
 
 #### IssuMgr.API
 - [ ] Asg

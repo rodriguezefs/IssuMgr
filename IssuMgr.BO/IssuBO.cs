@@ -29,6 +29,10 @@ namespace IssuMgr.BO {
             return IssuDM.GetAll();
         }
 
+        public Task<LstRslt<LblModel>> GetAllLbl() {
+            return IssuDM.GetAllLbl();
+        }
+
         public Task<ExeRslt> Update(int id, IssuModel Issu) {
             return IssuDM.Update(id, Issu);
         }
