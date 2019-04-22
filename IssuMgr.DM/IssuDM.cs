@@ -21,7 +21,7 @@ namespace IssuMgr.DM {
                 "(Tit, Txt, St, StmCre, StMdf) " +
                 "OUTPUT Inserted.IssuId " +
                 "VALUES " +
-                "(@Tit, @Txt, @St, GetDates(), GetDate()) ";
+                "(@Tit, @Txt, @St, GetDate(), GetDate()) ";
             //TODO Procesar los labels asignados
             //TODO Manejo de transacciones
             try {
