@@ -18,7 +18,7 @@ namespace IssuMgr.DM {
         public async Task<ExeRslt> Create(IssuModel Issu) {
             string lxQry =
                 "INSERT INTO [Issu] " +
-                "(Tit, Txt, St, StmCre, StMdf) " +
+                "(Tit, Txt, St, StmCre, StmMdf) " +
                 "OUTPUT Inserted.IssuId " +
                 "VALUES " +
                 "(@Tit, @Txt, @St, GetDate(), GetDate()) ";

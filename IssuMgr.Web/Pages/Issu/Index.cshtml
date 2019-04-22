@@ -7,7 +7,7 @@
 
 <a asp-page="./Create" class="btn btn-primary">Nuevo</a>
 <br />
-<hr/>
+<hr />
 <partial name="Shared/_MsgErr" />
 
 @if (Model.Issus != null && Model.Issus.Count > 0)
@@ -20,9 +20,12 @@
                     <div class="card-title">@lxIssu.Tit</div>
                     <div class="card-text">
                         @lxIssu.Txt
-                        @foreach (var lxLbl in lxIssu.LstLbl)
+                        @if (lxIssu.LstLbl != null)
                         {
-                            <span class="lbl" style="color: #@lxLbl.Clr; background-color: #@lxLbl.BkClr">@lxLbl.Lbl</span>
+                            @foreach (var lxLbl in lxIssu.LstLbl)
+                            {
+                                <span class="lbl" style="color: #@lxLbl.Clr; background-color: #@lxLbl.BkClr">@lxLbl.Lbl</span>
+                            }
                         }
                     </div>
                     <div class="card-footer">
