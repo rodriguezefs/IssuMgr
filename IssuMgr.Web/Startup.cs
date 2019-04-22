@@ -27,7 +27,10 @@ namespace IssuMgr.Web {
 
             // DI
             services.AddTransient<ILblBO, LblBO>();
+            services.AddTransient<IIssuBO, IssuBO>();
+
             services.AddTransient<ILblDM, LblDM>();
+            services.AddTransient<IIssuDM, IssuDM>();
 
             services.AddMvc()
                 .AddNewtonsoftJson();

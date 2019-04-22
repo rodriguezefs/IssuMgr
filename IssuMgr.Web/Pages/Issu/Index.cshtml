@@ -3,27 +3,36 @@
 @{
     ViewData["Title"] = "Issues";
 }
-<h1>Labels (Etiquetas)</h1>
+<h1>Issues</h1>
 
 <a asp-page="./Create" class="btn btn-primary">Nueva</a>
 <br />
 <partial name="Shared/_MsgErr" />
 
-<ul>
-    @foreach (var lxIssu in Model.Issus) {
-        <li>
-            <div class="card">
-                <div class="card-title">@lxIssu.Tit</div>
-                <div class="card-text">
-                    @lxIssu.Txt
-                    @foreach (var lxLbl in lxIssu.Lbls) {
-                        <span class="lbl" style="color: #@lxLbl.Clr; background-color: #@lxLbl.BkClr">@lxLbl.Lbl</span>
-                    }
+@if (Model.Issus != null && Model.Issus.Count > 0)
+{
+    <ul>
+        @foreach (var lxIssu in Model.Issus)
+        {
+            <li>
+                <div class="card">
+                    <div class="card-title">@lxIssu.Tit</div>
+                    <div class="card-text">
+                        @lxIssu.Txt
+                        @foreach (var lxLbl in lxIssu.Lbls)
+                        {
+                            <span class="lbl" style="color: #@lxLbl.Clr; background-color: #@lxLbl.BkClr">@lxLbl.Lbl</span>
+                        }
+                    </div>
+                    <div class="card-footer">
+                        <span>Creada: @lxIssu.StmCre</span>
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <span>Creada: @lxIssu.StmCre</span>
-                </div>
-            </div>
-        </li>
-    }
-</ul>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No hay Issues</p>
+}

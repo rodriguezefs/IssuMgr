@@ -124,7 +124,7 @@ namespace IssuMgr.DM {
             DataSet lxDS = new DataSet();
 
             string lxQryI =
-                "SELECT IssuId, Tit, Txt, St, StmCre, StMdf " +
+                "SELECT IssuId, Tit, Txt, St, StmCre, StmMdf " +
                 "  FROM [Issu] I";
 
             string lxQryLxI =
@@ -149,10 +149,10 @@ namespace IssuMgr.DM {
                     DataRelation lxI_LxI = new DataRelation("Issu_LblxIssu", lxColIssuIdM, lxColIssuIdD);
                     lxDS.Relations.Add(lxI_LxI);
 
-                    DataColumn lxColLblIdM = lxDS.Tables["Lbl"].Columns["LblId"];
-                    DataColumn lxColLblIdD = lxDS.Tables["LblxIssu"].Columns["LblId"];
-                    DataRelation lxL_LxI = new DataRelation("Lbl_LblxIssu", lxColLblIdM, lxColLblIdD);
-                    lxDS.Relations.Add(lxL_LxI);
+                    //DataColumn lxColLblIdM = lxDS.Tables["Lbl"].Columns["LblId"];
+                    //DataColumn lxColLblIdD = lxDS.Tables["LblxIssu"].Columns["LblId"];
+                    //DataRelation lxL_LxI = new DataRelation("Lbl_LblxIssu", lxColLblIdM, lxColLblIdD);
+                    //lxDS.Relations.Add(lxL_LxI);
                 }
                 var lxRslt = new LstRslt<IssuModel>();
                 if(lxDS.Tables["Issu"].Rows.Count > 0) {

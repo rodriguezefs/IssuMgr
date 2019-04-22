@@ -1,13 +1,15 @@
 ﻿using IssuMgr.API.DM.Interfaces;
 using IssuMgr.BO.Interfaces;
+using IssuMgr.DM;
 using IssuMgr.Model;
+using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 
 namespace IssuMgr.BO {
     public class IssuBO: IIssuBO {
         private readonly IIssuDM IssuDM;
-        public IssuBO(IIssuDM lblDM) {
-            IssuDM = lblDM;
+        public IssuBO(IIssuDM issuDM) {
+            IssuDM = issuDM;
         }
         public Task<ExeRslt> Create(IssuModel Issu) {
             return IssuDM.Create(Issu);
