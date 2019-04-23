@@ -49,9 +49,7 @@ namespace IssuMgr.Web {
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseRouting(routes => {
-                routes.MapRazorPages();
-            });
+            app.UseRouting();
 
             app.UseCookiePolicy();
 

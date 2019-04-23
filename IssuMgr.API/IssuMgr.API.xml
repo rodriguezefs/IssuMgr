@@ -4,6 +4,41 @@
         <name>IssuMgr.API</name>
     </assembly>
     <members>
+        <member name="M:IssuMgr.API.Controllers.IssuController.GetAll">
+            <summary>
+            Retorna todos los "Issues" disponibles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IssuMgr.API.Controllers.IssuController.Get(System.Int32)">
+            <summary>
+            Retorna un Issue con un Id específico
+            </summary>
+            <param name="id">Id del Lable a consultar</param>
+            <returns></returns>
+        </member>
+        <member name="M:IssuMgr.API.Controllers.IssuController.Post(IssuMgr.Model.IssuModel)">
+            <summary>
+            Crear (Insertar) un Issue
+            </summary>
+            <param name="issu">Información de Model del Issue</param>
+            <returns></returns>
+        </member>
+        <member name="M:IssuMgr.API.Controllers.IssuController.Put(System.Int32,IssuMgr.Model.IssuModel)">
+            <summary>
+            Actualizar (Update) la información de un Issue específico
+            </summary>
+            <param name="id">Id del Issue</param>
+            <param name="issu">Información de Model del Issue</param>
+            <returns></returns>
+        </member>
+        <member name="M:IssuMgr.API.Controllers.IssuController.Delete(System.Int32)">
+            <summary>
+            Borrar un Issue según su Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:IssuMgr.API.Controllers.LblController">
             <summary>
             Labels etiques para los Issues

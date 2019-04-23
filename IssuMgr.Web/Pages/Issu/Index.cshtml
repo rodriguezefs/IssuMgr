@@ -12,12 +12,12 @@
 
 @if (Model.Issus != null && Model.Issus.Count > 0)
 {
-    <ul>
+    <ul class="list-group">
         @foreach (var lxIssu in Model.Issus)
         {
-            <li>
+            <li class="list-group-item">
                 <div class="card">
-                    <div class="card-title">@lxIssu.Tit</div>
+                    <div class="card-title"><h2>@lxIssu.Tit</h2></div>
                     <div class="card-text">
                         @lxIssu.Txt
                         @if (lxIssu.LstLbl != null)
@@ -29,10 +29,19 @@
                         }
                     </div>
                     <div class="card-footer">
-                        <span>Creada: @lxIssu.StmCre</span>
-                        <div class="text-right">
-                            <a asp-page="./Edit" asp-route-id="@lxIssu.IssuId">Edit</a> |
-                            <a asp-page="./Delete" asp-route-id="@lxIssu.IssuId">Delete</a>
+                        <div class="row">
+                            <div class="col">
+                                <span>Creada: @lxIssu.StmCre</span>
+                            </div>
+                            <div class="col">
+                                <span>Modificada: @lxIssu.StmMdf</span>
+                            </div>
+                            <div class="col">
+                                <div class="text-right">
+                                    <a asp-page="./Edit" asp-route-id="@lxIssu.IssuId">Edit</a> |
+                                    <a asp-page="./Delete" asp-route-id="@lxIssu.IssuId">Delete</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

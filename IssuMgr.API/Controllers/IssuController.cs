@@ -12,7 +12,7 @@ namespace IssuMgr.API.Controllers {
     public class IssuController: ControllerBase {
         private readonly IIssuBO IssuBO;
         public IssuController(IIssuBO issuBO) {
-
+            IssuBO = issuBO;
         }
         // GET: api/Issu
         /// <summary>
