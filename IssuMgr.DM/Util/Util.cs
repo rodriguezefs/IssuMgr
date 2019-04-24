@@ -22,6 +22,23 @@ namespace IssuMgr.Util {
             return data;
         }
 
+        public static List<T> ToList<T>(this DataSet ds, string dtPadNom, string dtDetNom, string fltExp, T objDet) {
+            List<T> data = new List<T>();
+            DataTable lxDT = ds.Tables[dtPadNom];
+            foreach(DataRow row in lxDT.Rows) {
+                T item = row.ToRow<T>();
+                data.Add(item);
+
+                DataRow[] lxRows = ds.Tables[dtDetNom].Select(fltExp);
+                List<T> LstobjDet = new List<T>();
+                foreach(var lxRow in lxRows) {
+                    var lxLbl = lxRow.ToRow<LblModel>();
+                    lxIssu.LstLbl.Add(lxLbl);
+                }
+            }
+            return data;
+        }
+
         /// <summary>
         /// Retorna un Objeto (clase) genérica basado en una DataRow
         /// </summary>
