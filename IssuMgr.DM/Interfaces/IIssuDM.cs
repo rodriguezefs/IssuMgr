@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace IssuMgr.API.DM.Interfaces {
+namespace IssuMgr.DM.Interfaces {
     public interface IIssuDM {
         Task<ExeRslt> Create(IssuModel Issu);
         Task<ExeRslt> Delete(int id);

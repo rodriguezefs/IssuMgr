@@ -1,4 +1,4 @@
-﻿using IssuMgr.API.DM.Interfaces;
+﻿using IssuMgr.DM.Interfaces;
 using IssuMgr.BO;
 using IssuMgr.BO.Interfaces;
 using IssuMgr.DM;
@@ -12,6 +12,7 @@ using System.IO;
 using System.Reflection;
 using Swashbuckle.AspNetCore;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.Extensions.Hosting;
 
 namespace IssuMgr.API {
     public class Startup {
@@ -23,7 +24,7 @@ namespace IssuMgr.API {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             // DI
             services.AddTransient<ILblBO, LblBO>();
@@ -47,7 +48,7 @@ namespace IssuMgr.API {
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure(IApplicationBuilder app, IHostEnvironment env) {
             if(env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             } else {

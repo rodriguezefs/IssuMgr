@@ -17,8 +17,11 @@
         {
             <li class="list-group-item">
                 <div class="card">
-                    <div class="card-title"><h2>@lxIssu.Tit</h2></div>
-                    <div class="card-text">
+                    <h2 class="card-header">
+                        Issue #@lxIssu.IssuId
+                    </h2>
+                    <h4 class="card-title">@lxIssu.Tit</h4>
+                    <p class="card-text">
                         @lxIssu.Txt
                         @if (lxIssu.LstLbl != null)
                         {
@@ -27,7 +30,7 @@
                                 <span class="lbl" style="color: #@lxLbl.Clr; background-color: #@lxLbl.BkClr">@lxLbl.Lbl</span>
                             }
                         }
-                    </div>
+                    </p>
                     <div class="card-footer">
                         <div class="row">
                             <div class="col">

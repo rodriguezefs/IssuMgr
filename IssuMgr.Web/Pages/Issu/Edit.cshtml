@@ -1,0 +1,70 @@
+﻿@page
+@model IssuMgr.Web.Pages.Issu.EditModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Nuevo Issue</h1>
+<hr />
+<partial name="Shared/_MsgErr" />
+
+<div class="container">
+    <form method="post">
+        <div class="row">
+            <div class="col">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Issu.Tit"></label>
+                    <input asp-for="Issu.Tit" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Issu.Txt"></label>
+                    <textarea asp-for="Issu.Txt" class="form-control" cols="40" rows="5"></textarea>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label asp-for="LstLbl"></label>
+                    <select name="Issu.LstLbl" id="Issu_LstLbl" multiple class="form-control">
+                        @foreach (var lbl in Model.LstLbl)
+                        {
+                            <option value="@lbl.LblId">@lbl.Lbl</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div>
+    <a asp-page="Index">Volver a la lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#Issu_LstLbl').multiselect({
+                enableClickableOptGroups: true,
+                includeSelectAllOption: true,
+                selectAllText: 'Seleccionar todos',
+                selectAllValue: '*',
+                allSelectedText: 'Todas',
+                nonSelectedText: 'Ninguna',
+                nSelectedText: ' -  Selecionados',
+                maxHeight: 200
+            });
+            $('#Issu_LstLbl').multiselect('selectAll', false);
+            $('#Issu_LstLbl').multiselect('updateButtonText');
+
+        });
+    </script>
+}

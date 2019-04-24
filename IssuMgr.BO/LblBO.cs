@@ -1,4 +1,4 @@
-﻿using IssuMgr.API.DM.Interfaces;
+﻿using IssuMgr.DM.Interfaces;
 using IssuMgr.BO.Interfaces;
 using IssuMgr.Model;
 using System.Threading.Tasks;

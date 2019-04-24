@@ -1,7 +1,7 @@
 ﻿using IssuMgr.Model;
 using System.Threading.Tasks;
 
-namespace IssuMgr.API.DM.Interfaces {
+namespace IssuMgr.DM.Interfaces {
     public interface ILblDM {
         string GetCnxStr();
         Task<LstRslt<LblModel>> GetAll();
