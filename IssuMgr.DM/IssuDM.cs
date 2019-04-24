@@ -143,7 +143,7 @@ namespace IssuMgr.DM {
                         SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
                         lxDA.Fill(lxDS, "LblxIssu");
                     }
-            
+
                     DataColumn lxColIssuIdM = lxDS.Tables["Issu"].Columns["IssuId"];
                     DataColumn lxColIssuIdD = lxDS.Tables["LblxIssu"].Columns["IssuId"];
                     DataRelation lxI_LxI = new DataRelation("Issu_LblxIssu", lxColIssuIdM, lxColIssuIdD);
@@ -157,6 +157,17 @@ namespace IssuMgr.DM {
                 var lxRslt = new LstRslt<IssuModel>();
                 if(lxDS.Tables["Issu"].Rows.Count > 0) {
                     var lxIssus = lxDS.Tables["Issu"].ToList<IssuModel>();
+
+                    foreach(var lxIssu in lxIssus) {
+                        string lxFltStr = $"[IssuId] = {lxIssu.IssuId}";
+                        DataRow[] lxRows = lxDS.Tables["LblxIssu"].Select(lxFltStr);
+                        lxIssu.LstLbl = new List<LblModel>();
+                        foreach(var lxRow in lxRows) {
+                            var lxLbl = lxRow.ToRow<LblModel>();
+                            lxIssu.LstLbl.Add(lxLbl);
+                        }
+                    }
+
                     lxRslt = new LstRslt<IssuModel>(lxIssus);
                 }
                 return await Task.FromResult(lxRslt);

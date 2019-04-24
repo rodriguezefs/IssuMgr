@@ -57,5 +57,6 @@ body {
 
 .lbl {
     margin: 2px;
-    padding: 2px;
+    padding: 4px;
+    border-radius: 5px;
 }

@@ -9,10 +9,10 @@
   - [ ] Delete
   - [x] Index
 - [ ] Issu (Issue)
-  - [ ] Create
+  - [x] Create
   - [ ] Edit
   - [ ] Delete
-  - [ ] Index
+  - [x] Index
 - [ ] Asg (Asignado)
 - [ ] Localización
 - [ ] Client Validation (??)
@@ -34,3 +34,5 @@
 - [ ] AsgDM
 - [ ] IssuDM
 - [x] LblDM
+
+## Proyecto de Pruebas
