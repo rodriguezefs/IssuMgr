@@ -45,7 +45,6 @@ namespace IssuMgr.DM {
                 return new ExeRslt(-1, ex);
             }
         }
-
         public async Task<ExeRslt> Delete(int id) {
             string lxQry = "DELETE [Issu] WHERE IssuId = @Id";
             //TODO Borrar Labels asignados
@@ -64,7 +63,6 @@ namespace IssuMgr.DM {
                 return new ExeRslt(-1, ex);
             }
         }
-
         public async Task<bool> Exists(int id) {
             DataTable lxDT = new DataTable();
             string lxQry =
@@ -91,7 +89,6 @@ namespace IssuMgr.DM {
                 return await Task.FromResult(false);
             }
         }
-
         public async Task<SnglRslt<IssuModel>> Get(int id) {
             DataTable lxDT = new DataTable();
             string lxQry =
@@ -119,7 +116,6 @@ namespace IssuMgr.DM {
                 return new SnglRslt<IssuModel>(new IssuModel(), ex);
             }
         }
-
         public async Task<LstRslt<IssuModel>> GetAll() {
             DataSet lxDS = new DataSet();
 
@@ -156,17 +152,8 @@ namespace IssuMgr.DM {
                 }
                 var lxRslt = new LstRslt<IssuModel>();
                 if(lxDS.Tables["Issu"].Rows.Count > 0) {
-                    var lxIssus = lxDS.Tables["Issu"].ToList<IssuModel>();
-
-                    foreach(var lxIssu in lxIssus) {
-                        string lxFltStr = $"[IssuId] = {lxIssu.IssuId}";
-                        DataRow[] lxRows = lxDS.Tables["LblxIssu"].Select(lxFltStr);
-                        lxIssu.LstLbl = new List<LblModel>();
-                        foreach(var lxRow in lxRows) {
-                            var lxLbl = lxRow.ToRow<LblModel>();
-                            lxIssu.LstLbl.Add(lxLbl);
-                        }
-                    }
+                    List<IssuModel> lxIssus = lxDS.Tables["Issu"].ToList<IssuModel>();
+                    FillLbls(ref lxIssus, lxDS);
 
                     lxRslt = new LstRslt<IssuModel>(lxIssus);
                 }
@@ -175,7 +162,6 @@ namespace IssuMgr.DM {
                 return new LstRslt<IssuModel>(new List<IssuModel>(), ex);
             }
         }
-
         public async Task<LstRslt<LblModel>> GetAllLbl() {
             DataTable lxDT = new DataTable();
 
@@ -203,12 +189,10 @@ namespace IssuMgr.DM {
                 return new LstRslt<LblModel>(new List<LblModel>(), ex);
             }
         }
-
         public string GetCnxStr() {
             string lxCnxStr = Cfg.GetConnectionString("DefaultConnection");
             return lxCnxStr;
         }
-
         public async Task<ExeRslt> Update(int id, IssuModel Issu) {
             string lxQry = "UPDATE [Issu] " +
                            "   SET " +
@@ -238,6 +222,18 @@ namespace IssuMgr.DM {
                 ex.Data.Add("Qry", lxQry);
                 ex.Data.Add("Method", Ext.GetCaller());
                 return new ExeRslt(-1, ex);
+            }
+        }
+        private void FillLbls(ref List<IssuModel> Issus, DataSet DS) {
+            
+            foreach(var lxIssu in Issus) {
+                string lxFltStr = $"[IssuId] = {lxIssu.IssuId}";
+                DataRow[] lxRows = DS.Tables["LblxIssu"].Select(lxFltStr);
+                lxIssu.LstLbl = new List<LblModel>();
+                foreach(var lxRow in lxRows) {
+                    var lxLbl = lxRow.ToRow<LblModel>();
+                    lxIssu.LstLbl.Add(lxLbl);
+                }
             }
         }
     }
