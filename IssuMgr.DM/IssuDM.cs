@@ -16,30 +16,57 @@ namespace IssuMgr.DM {
             Cfg = cfg;
         }
         public async Task<ExeRslt> Create(IssuModel Issu) {
+            SqlTransaction trns = null;
+
             string lxQry =
                 "INSERT INTO [Issu] " +
                 "(Tit, Txt, St, StmCre, StmMdf) " +
                 "OUTPUT Inserted.IssuId " +
                 "VALUES " +
                 "(@Tit, @Txt, @St, GetDate(), GetDate()) ";
-            //TODO Procesar los labels asignados
-            //TODO Manejo de transacciones
+
+            string lxQryLbl =
+                "INSERT INTO [LblxIssu] " +
+                "(IssuId, LblId) " +
+                "VALUES " +
+                "(@IssuId, @LblId)";
+
             try {
                 using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
-                    using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
+                    await cnx.OpenAsync();
+                    trns = cnx.BeginTransaction();
+
+                    using(SqlCommand cmd = new SqlCommand(lxQry, cnx, trns)) {
                         cmd.CommandType = CommandType.Text;
                         cmd.Parameters.AddWithValue("@Tit", Issu.Tit);
                         cmd.Parameters.AddWithValue("@Txt", Issu.Txt);
                         cmd.Parameters.AddWithValue("@St", Issu.St);
 
-                        await cnx.OpenAsync();
                         var id = await cmd.ExecuteScalarAsync();
                         Issu.IssuId = Convert.ToInt32(id);
+
+                        foreach(var lxLbl in Issu.LstLbl) {
+                            using(SqlCommand cmdL = new SqlCommand(lxQryLbl, cnx, trns)) {
+                                cmdL.CommandType = CommandType.Text;
+                                cmdL.Parameters.AddWithValue("@IssuId", Issu.IssuId);
+                                cmdL.Parameters.AddWithValue("@LblId",  lxLbl.LblId);
+
+                                await cmdL.ExecuteScalarAsync();
+                            }
+                        }
+
+                        trns.Commit();
 
                         return new ExeRslt(Issu.IssuId);
                     }
                 }
             } catch(Exception ex) {
+                try {
+                    trns.Rollback();
+                } catch(Exception exr) {
+                    ex.Data.Add("Rollback", exr.Message);
+                }
+
                 ex.Data.Add("Qry", lxQry);
                 ex.Data.Add("Method", Ext.GetCaller());
                 return new ExeRslt(-1, ex);
@@ -225,7 +252,7 @@ namespace IssuMgr.DM {
             }
         }
         private void FillLbls(ref List<IssuModel> Issus, DataSet DS) {
-            
+
             foreach(var lxIssu in Issus) {
                 string lxFltStr = $"[IssuId] = {lxIssu.IssuId}";
                 DataRow[] lxRows = DS.Tables["LblxIssu"].Select(lxFltStr);

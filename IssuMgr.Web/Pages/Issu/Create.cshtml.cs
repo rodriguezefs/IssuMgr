@@ -31,7 +31,10 @@ namespace IssuMgr.Web.Pages.Issu {
             return Page();
         }
 
-        public async Task<IActionResult> OnPost(IFormCollection data) {
+        public async Task<IActionResult> OnPost() {
+
+            Issu.LstLbl = LstLbl;
+
             var lxRslt = await IssuBO.Create(Issu);
 
             if(lxRslt.Err != null) {

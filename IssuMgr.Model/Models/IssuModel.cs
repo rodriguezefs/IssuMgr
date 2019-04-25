@@ -13,6 +13,6 @@ namespace IssuMgr.Model {
         public IssueSt St { get; set; }
         public DateTime StmCre { get; set; }
         public DateTime StmMdf { get; set; }
-        public List<LblModel> LstLbl { get; set; }
+        public IList<LblModel> LstLbl { get; set; }
     }
 }
