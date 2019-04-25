@@ -23,15 +23,30 @@
                 </div>
             </div>
             <div class="col">
-                <div class="form-group">
-                    <label asp-for="LstLbl"></label>
-                    <select name="Issu.LstLbl" id="Issu_LstLbl" multiple class="form-control">
-                        @foreach (var lbl in Model.LstLbl)
-                        {
-                            <option value="@lbl.LblId">@lbl.Lbl</option>
+                <div class="dropdown mr-1">
+                    <button type="button" class="btn btn-secondary dropdown-toggle"></button>
+                    <ul class="dropdown-menu">
+                        @{int i = 0; }
+                        @foreach (var lbl in Model.LstLbl) {
+                            <li>
+                                <div class="checkbox">
+                                    @{string lxId = "LstLbl_" + @i + "__LblId";}
+                                    <label><input type="checkbox" name="LstLbl[@i].LblId" id="@lxId" value="@lbl.LblId">@lbl.Lbl</label>
+                                </div>
+                            </li>
                         }
-                    </select>
+                    </ul>
                 </div>
+
+                @*<div class="form-group">
+                        <label asp-for="LstLbl"></label>
+                        <select name="Issu.LstLbl" id="Issu_LstLbl" multiple class="form-control">
+                            @foreach (var lbl in Model.LstLbl)
+                            {
+                                <option value="@lbl.LblId">@lbl.Lbl</option>
+                            }
+                        </select>
+                    </div>*@
             </div>
         </div>
         <div class="row">

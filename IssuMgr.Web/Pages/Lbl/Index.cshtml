@@ -38,7 +38,7 @@
                 <td>@Html.DisplayFor(i => item.Lbl)</td>
                 <td>@Html.DisplayFor(i => item.BkClr)</td>
                 <td>#@Html.DisplayFor(i => item.Clr)</td>
-                <td><span style="color: #@item.Clr; background-color: #@item.BkClr">@item.Lbl</span></td>
+                <td><span class="lbl" style="color: #@item.Clr; background-color: #@item.BkClr">@item.Lbl</span></td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.LblId">Edit</a> |
                     <a asp-page="./Delete" asp-route-id="@item.LblId">Delete</a>

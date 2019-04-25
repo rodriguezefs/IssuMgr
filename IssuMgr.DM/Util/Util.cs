@@ -22,6 +22,7 @@ namespace IssuMgr.Util {
             return data;
         }
 
+        //TODO Terminar
         public static List<T> ToList<T>(this DataSet ds, string dtPadNom, string dtDetNom, string fltExp, T objDet) {
             List<T> data = new List<T>();
             DataTable lxDT = ds.Tables[dtPadNom];
@@ -32,8 +33,8 @@ namespace IssuMgr.Util {
                 DataRow[] lxRows = ds.Tables[dtDetNom].Select(fltExp);
                 List<T> LstobjDet = new List<T>();
                 foreach(var lxRow in lxRows) {
-                    var lxLbl = lxRow.ToRow<LblModel>();
-                    lxIssu.LstLbl.Add(lxLbl);
+                    var lxDet = lxRow.ToRow<T>();
+                    //data.T.Add(lxDet);
                 }
             }
             return data;
