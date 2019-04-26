@@ -47,5 +47,29 @@
         }
     </tbody>
 </table>
+<div>
+    <ul class="pagination">
+        <li class="page-item" @(!Model.MosPrm ? "disabled" : "")>
+            <a asp-page="/lbl/index" asp-route-PagAct="1" class="page-link">
+                <i class="fas fa-fast-backward"></i>
+            </a>
+        </li>
+        <li class="page-item" @(!Model.MosPrv ? "disabled" : "")>
+            <a asp-page="/lbl/index" asp-route-PagAct="@(Model.PagAct -1)" class="page-link">
+                <i class="fas fa-step-backward"></i>
+            </a>
+        </li>
+        <li class="page-item" @(!Model.MosSig ? "disabled" : "")>
+            <a asp-page="/lbl/index" asp-route-PagAct="@(Model.PagAct +1)" class="page-link">
+                <i class="fas fa-step-forward"></i>
+            </a>
+        </li>
+        <li class="page-item" @(!Model.MosUlt ? "disabled" : "")>
+            <a asp-page="/lbl/index" asp-route-PagAct="@Model.TotPag" class="page-link">
+                <i class="fas fa-fast-forward"></i>
+            </a>
+        </li>
+    </ul>
+</div>
 <hr />
 

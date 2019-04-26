@@ -3,11 +3,18 @@ using System.Threading.Tasks;
 
 namespace IssuMgr.BO.Interfaces {
     public interface ILblBO {
-        Task<LstRslt<LblModel>> GetAll();
-        Task<SnglRslt<LblModel>> Get(int id);
         Task<ExeRslt> Create(LblModel Lbl);
-        Task<bool> Exists(int id);
+
         Task<ExeRslt> Delete(int id);
+
+        Task<bool> Exists(int id);
+
+        Task<SnglRslt<LblModel>> Get(int id);
+
+        Task<LstRslt<LblModel>> GetAll();
+
+        Task<PagRslt<LblModel>> GetPag(int numPag, int tamPag);
+
         Task<ExeRslt> Update(int id, LblModel Lbl);
     }
 }

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace IssuMgr.DM {
@@ -170,6 +171,39 @@ namespace IssuMgr.DM {
                 }
             } catch(Exception ex) {
                 return new LstRslt<LblModel>(new List<LblModel>(), ex);
+            }
+        }
+
+        public async Task<PagRslt<LblModel>> GetPag(int pag, int tam) {
+            DataTable lxDT = new DataTable();
+
+            string lxQry =
+                "SELECT LblId, Lbl, BkClr, Clr " +
+                "  FROM [Lbl]";
+
+            try {
+                using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
+                    using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
+                        SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
+                        lxDA.Fill(lxDT);
+                        lxDT.TableName = "Lbl";
+                    }
+                }
+
+                if(lxDT.Rows.Count > 0) {
+                    var lxLbls = lxDT.ToList<LblModel>().AsQueryable();
+                    int lxSkp = (pag - 1) * tam;
+                    int lxTke = tam;
+                    int cnt = lxDT.Rows.Count;
+
+                    var lxPagLst = lxLbls.Skip(lxSkp).Take(lxTke).ToList();
+                    var lxPagRslt = new PagRslt<LblModel>(lxPagLst, pag, tam, cnt);
+                    return await Task.FromResult(lxPagRslt);
+                } else {
+                    return new PagRslt<LblModel>(new List<LblModel>());
+                }
+            } catch(Exception ex) {
+                return new PagRslt<LblModel>(new List<LblModel>(), ex);
             }
         }
 

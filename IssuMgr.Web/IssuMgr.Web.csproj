@@ -17,4 +17,9 @@
     <ProjectReference Include="..\IssuMgr.Model\IssuMgr.Model.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\fontawesome\" />
+  </ItemGroup>
+
 </Project>

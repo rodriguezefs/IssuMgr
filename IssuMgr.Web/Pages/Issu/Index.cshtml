@@ -10,7 +10,7 @@
 <hr />
 <partial name="Shared/_MsgErr" />
 
-@if (Model.Issus != null && Model.Issus.Count > 0)
+@if (Model.Issus != null || Model.Issus.Count > 0)
 {
     <ul class="list-group">
         @foreach (var lxIssu in Model.Issus)
