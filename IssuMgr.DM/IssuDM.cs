@@ -118,11 +118,20 @@ namespace IssuMgr.DM {
         }
         public async Task<SnglRslt<IssuModel>> Get(int id) {
             DataTable lxDT = new DataTable();
+            DataTable lxDTL = new DataTable();
+
             string lxQry =
                 "SELECT Id, Cod_IssuModel, Nom_IssuModel " +
                 "  FROM [Issu]" +
                 " WHERE Id = @id";
 
+            string lxQryLxI =
+              "SELECT LxI.IssuId, LxI.LblId, L.Lbl, L.BkClr, L.Clr " +
+              " FROM [LblxIssu] LxI " +
+              " LEFT JOIN [Lbl] L " +
+              "   ON L.LblId = LxI.LblId " +
+              "WHERE LxI.IssuId = @IssuId";
+            
             try {
                 using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
                     using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
@@ -132,10 +141,20 @@ namespace IssuMgr.DM {
                         lxDA.Fill(lxDT);
                         lxDT.TableName = "Issu";
                     }
+
+                    using(SqlCommand cmd = new SqlCommand(lxQryLxI, cnx)) {
+                        cmd.Parameters.AddWithValue("@IssuId", id);
+                        SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
+                        lxDA.Fill(lxDTL);
+                        lxDT.TableName = "LblxIssu";
+                    }
+
                 }
                 if(lxDT.Rows.Count > 0) {
-                    IssuModel lbl = lxDT.Rows[0].ToRow<IssuModel>();
-                    return await Task.FromResult(new SnglRslt<IssuModel>(lbl));
+                    IssuModel lxIssu = lxDT.Rows[0].ToRow<IssuModel>();
+                    FillLbl(ref lxIssu, lxDTL);
+
+                    return await Task.FromResult(new SnglRslt<IssuModel>(lxIssu));
                 } else {
                     return null;
                 }
@@ -148,7 +167,8 @@ namespace IssuMgr.DM {
 
             string lxQryI =
                 "SELECT IssuId, Tit, Txt, St, StmCre, StmMdf " +
-                "  FROM [Issu] I";
+                "  FROM [Issu] I" +
+                " ORDER BY StmMdf DESC";
 
             string lxQryLxI =
                 "SELECT LxI.IssuId, LxI.LblId, L.Lbl, L.BkClr, L.Clr " +
@@ -261,6 +281,15 @@ namespace IssuMgr.DM {
                     var lxLbl = lxRow.ToRow<LblModel>();
                     lxIssu.LstLbl.Add(lxLbl);
                 }
+            }
+        }
+
+        private void FillLbl(ref IssuModel Issu, DataTable DT) {
+            DataRow[] lxRows = DT.Select();
+            Issu.LstLbl = new List<LblModel>();
+            foreach(var lxRow in lxRows) {
+                var lxLbl = lxRow.ToRow<LblModel>();
+                Issu.LstLbl.Add(lxLbl);
             }
         }
     }
