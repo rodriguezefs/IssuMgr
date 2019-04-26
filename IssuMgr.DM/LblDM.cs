@@ -174,12 +174,13 @@ namespace IssuMgr.DM {
             }
         }
 
-        public async Task<PagRslt<LblModel>> GetPag(int pag, int tam) {
+        public async Task<PagRslt<LblModel>> GetPag(int pag, int tam, string sortBy = "LblId") {
             DataTable lxDT = new DataTable();
 
             string lxQry =
                 "SELECT LblId, Lbl, BkClr, Clr " +
-                "  FROM [Lbl]";
+                "  FROM [Lbl] " +
+               $" ORDER By {sortBy}";
 
             try {
                 using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
@@ -191,6 +192,8 @@ namespace IssuMgr.DM {
                 }
 
                 if(lxDT.Rows.Count > 0) {
+                    //TODO Probar table.AsEnumerable().AsQueryable()...
+                    // https://www.mikesdotnetting.com/article/329/adding-sorting-to-paging-in-asp-net-core-razor-pages
                     var lxLbls = lxDT.ToList<LblModel>().AsQueryable();
                     int lxSkp = (pag - 1) * tam;
                     int lxTke = tam;
