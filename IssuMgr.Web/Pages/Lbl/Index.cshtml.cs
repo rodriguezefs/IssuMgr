@@ -18,7 +18,7 @@ namespace IssuMgr.Web.Pages.Lbl {
         public bool MosSig => PagAct < TotPag;
         public bool MosUlt => PagAct != TotPag;
 
-        [BindProperty]
+        [BindProperty(SupportsGet = true)]
         public int PagAct { get; set; } = 1;
         public int TamPag { get; set; } = 5;
         public int TotPag { get; set; }

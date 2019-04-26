@@ -11,7 +11,7 @@
 <hr />
 <partial name="Shared/_MsgErr" />
 
-<table class="table table-hover table-responsive">
+<table class="table table-hover table-sm ">
     <thead>
         <tr>
             <th>
@@ -49,22 +49,32 @@
 </table>
 <div>
     <ul class="pagination">
-        <li class="page-item" @(!Model.MosPrm ? "disabled" : "")>
+        <li class="page-item @(!Model.MosPrm ? "disabled" : "")">
             <a asp-page="/lbl/index" asp-route-PagAct="1" class="page-link">
                 <i class="fas fa-fast-backward"></i>
             </a>
         </li>
-        <li class="page-item" @(!Model.MosPrv ? "disabled" : "")>
+        <li class="page-item @(!Model.MosPrv ? "disabled" : "")">
             <a asp-page="/lbl/index" asp-route-PagAct="@(Model.PagAct -1)" class="page-link">
                 <i class="fas fa-step-backward"></i>
             </a>
         </li>
-        <li class="page-item" @(!Model.MosSig ? "disabled" : "")>
+
+        @for (var p = 1; p <= Model.TotPag; p++)
+        {
+            <li class="page-item @(Model.PagAct == p ? "disabled" : "")">
+                <a asp-page="/lbl/index" asp-route-PagAct="@(p)" class="page-link">
+                    @p
+                </a>
+            </li>
+        }
+
+        <li class="page-item @(!Model.MosSig ? "disabled" : "")">
             <a asp-page="/lbl/index" asp-route-PagAct="@(Model.PagAct +1)" class="page-link">
                 <i class="fas fa-step-forward"></i>
             </a>
         </li>
-        <li class="page-item" @(!Model.MosUlt ? "disabled" : "")>
+        <li class="page-item @(!Model.MosUlt ? "disabled" : "")">
             <a asp-page="/lbl/index" asp-route-PagAct="@Model.TotPag" class="page-link">
                 <i class="fas fa-fast-forward"></i>
             </a>
