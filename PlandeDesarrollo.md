@@ -3,10 +3,10 @@
 ## User Interface
 
 #### IssuMgr.Web
-- [ ] Lbl (Etiqueta)
+- [x] Lbl (Etiqueta)
   - [x] Create
   - [x] Edit
-  - [ ] Delete
+  - [x] Delete
   - [x] Index
 - [ ] Issu (Issue)
   - [x] Create
@@ -32,7 +32,7 @@
 
 ## Data Layer
 - [ ] AsgDM
-- [ ] IssuDM
+- [x] IssuDM
 - [x] LblDM
 
 ## Proyecto de Pruebas
