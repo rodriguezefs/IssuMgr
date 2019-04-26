@@ -16,7 +16,7 @@ namespace IssuMgr.Web.Pages.Lbl {
         public async Task<ActionResult> OnGet(int id) {
             var lxRslt = await LblBO.Get(id);
             if(lxRslt.Err != null) {
-                TempData["MsgErr"] = lxRslt.Err.Message;
+                TempData["ExErr"] = lxRslt.Err;
 
                 return Page();
             }
@@ -34,7 +34,7 @@ namespace IssuMgr.Web.Pages.Lbl {
             ExeRslt lxRslt = await LblBO.Update(id, Lbl);
 
             if(lxRslt.Err != null) {
-                TempData["MsgErr"] = lxRslt.Err.Message;
+                TempData["ExErr"] = lxRslt.Err;
                 return Page();
             }
 

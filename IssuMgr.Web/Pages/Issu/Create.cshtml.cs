@@ -38,7 +38,7 @@ namespace IssuMgr.Web.Pages.Issu {
             var lxRslt = await IssuBO.Create(Issu);
 
             if(lxRslt.Err != null) {
-                TempData["MsgErr"] = lxRslt.Err.Message;
+                TempData["ExErr"] = lxRslt.Err;
                 return Page();
             }
 

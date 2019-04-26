@@ -14,7 +14,7 @@ namespace IssuMgr.Web.Pages.Lbl {
             var lxRslt = await LblBO.GetAll();
 
             if(lxRslt.Err != null) {
-                TempData["MsgErr"] = lxRslt.Err.Message;
+                TempData["ExErr"] = lxRslt.Err;
             }
             Lbls = lxRslt.Lst;
         }

@@ -17,7 +17,7 @@ namespace IssuMgr.Web.Pages.Issu {
             var lxRslt = await IssuBO.GetAll();
 
             if(lxRslt.Err != null) {
-                TempData["MsgErr"] = lxRslt.Err.Message;
+                TempData["ExErr"] = lxRslt.Err;
             }
 
             Issus = lxRslt.Lst;

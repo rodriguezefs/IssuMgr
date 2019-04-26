@@ -1,8 +1,29 @@
 ﻿@{
-    if (TempData["MsgErr"] != null) {
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <p>@Html.Raw(TempData["MsgErr"])</p>
+    if (TempData["ExErr"] != null) {
+        Exception lxExErr = (Exception)TempData["ExErr"];
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Error</strong>
+        <p>@Html.Raw(lxExErr.Message)</p>
+
+        <a href="#MasInfo" class="btn btn-secondary btn-danger" data-toggle="collapse">
+            <span>Más info</span>
+            </a>
+        <div id="MasInfo" class="collapse">
+            @foreach (var lxKey in lxExErr.Data.Keys) {
+                <strong>@lxKey</strong>
+                <br />
+                <p>@lxExErr.Data[lxKey]</p>
+            }
         </div>
+            <a href="#StackTrace" class="btn btn-secondary btn-danger" data-toggle="collapse">
+                <span>Stack Trace</span>
+            </a>
+            <div id="StackTrace" class="collapse">
+                <strong>Stack Trace</strong>
+                <br />
+                @Html.Raw(lxExErr.StackTrace.Replace("\n", "<br/>"))
+            </div>
+    </div>
     }
 }

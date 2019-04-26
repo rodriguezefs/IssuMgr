@@ -17,7 +17,7 @@ namespace IssuMgr.Web.Pages.Lbl {
             var lxRslt = await LblBO.Get(id);
 
             if(lxRslt.Err != null) {
-                TempData["MsgErr"] = lxRslt.Err.Message;
+                TempData["ExErr"] = lxRslt.Err;
 
                 return Page();
             }
@@ -30,7 +30,7 @@ namespace IssuMgr.Web.Pages.Lbl {
             var lxRslt = await LblBO.Delete(LblId);
 
             if(lxRslt.Err != null) {
-                TempData["MsgErr"] = lxRslt.Err.Message;
+                TempData["ExErr"] = lxRslt.Err;
 
                 return RedirectToPage("./Index");
             }

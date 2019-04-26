@@ -206,6 +206,9 @@ namespace IssuMgr.DM {
                 }
                 return await Task.FromResult(lxRslt);
             } catch(Exception ex) {
+                ex.Data.Add("QryI", lxQryI);
+                ex.Data.Add("QryLxI", lxQryLxI);
+                ex.Data.Add("Method", Ext.GetCaller());
                 return new LstRslt<IssuModel>(new List<IssuModel>(), ex);
             }
         }

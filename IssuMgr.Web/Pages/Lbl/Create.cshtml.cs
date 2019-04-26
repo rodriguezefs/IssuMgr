@@ -25,7 +25,7 @@ namespace IssuMgr.Web.Pages.Lbl {
             var lxRslt = await LblBO.Create(Lbl);
 
             if(lxRslt.Err != null) {
-                TempData["MsgErr"] = lxRslt.Err.Message;
+                TempData["ExErr"] = lxRslt.Err;
 
                 return Page();
             }
