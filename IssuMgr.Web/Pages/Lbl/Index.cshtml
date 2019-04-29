@@ -7,67 +7,38 @@
 <h1>Labels (Etiquetas)</h1>
 
 <a asp-page="./Create" class="btn btn-primary">Nueva</a>
-<br />
-<hr />
+
 <partial name="Shared/_MsgErr" />
 
-<table class="table table-hover table-sm ">
+<table class="table table-hover table-sm mt-2">
     <thead>
         <tr>
             <th>
                 <a asp-page="Index" class="sort-link" asp-route-OrdBy="LblId" asp-route-EsDsn="@Model.EsDsn">Id</a>
                 @if (Model.OrdBy == "LblId")
                 {
-                    if (Model.EsDsn)
-                    {
-                        <i class='fa fa-sort-down'></i>
-                    }
-                    else
-                    {
-                        <i class='fa fa-sort-up'></i>
-                    }
+                    <i class='fa fa-sort-@(Model.EsDsn ? "down" : "up")'></i>
                 }
             </th>
             <th>
                 <a asp-page="Index" class="sort-link" asp-route-OrdBy="Lbl" asp-route-EsDsn="@Model.EsDsn">Etiqueta</a>
                 @if (Model.OrdBy == "Lbl")
                 {
-                    if (Model.EsDsn)
-                    {
-                        <i class='fa fa-sort-down'></i>
-                    }
-                    else
-                    {
-                        <i class='fa fa-sort-up'></i>
-                    }
+                    <i class='fa fa-sort-@(Model.EsDsn ? "down" : "up")'></i>
                 }
             </th>
             <th>
                 <a asp-page="Index" class="sort-link" asp-route-OrdBy="BkClr" asp-route-EsDsn="@Model.EsDsn">BkColor</a>
                 @if (Model.OrdBy == "BkClr")
                 {
-                    if (Model.EsDsn)
-                    {
-                        <i class='fa fa-sort-down'></i>
-                    }
-                    else
-                    {
-                        <i class='fa fa-sort-up'></i>
-                    }
+                    <i class='fa fa-sort-@(Model.EsDsn ? "down" : "up")'></i>
                 }
             </th>
             <th>
                 <a asp-page="Index" class="sort-link" asp-route-OrdBy="Clr" asp-route-EsDsn="@Model.EsDsn">Color</a>
                 @if (Model.OrdBy == "Clr")
                 {
-                    if (Model.EsDsn)
-                    {
-                        <i class='fa fa-sort-down'></i>
-                    }
-                    else
-                    {
-                        <i class='fa fa-sort-up'></i>
-                    }
+                    <i class='fa fa-sort-@(Model.EsDsn ? "down" : "up")'></i>
                 }
             </th>
             <th></th>
@@ -91,39 +62,8 @@
         }
     </tbody>
 </table>
-<div>
-    <ul class="pagination">
-        <li class="page-item @(!Model.MosPrm ? "disabled" : "")">
-            <a asp-page="/lbl/index" asp-route-PagAct="1" class="page-link">
-                <i class="fas fa-fast-backward"></i>
-            </a>
-        </li>
-        <li class="page-item @(!Model.MosPrv ? "disabled" : "")">
-            <a asp-page="/lbl/index" asp-route-PagAct="@(Model.PagAct -1)" class="page-link">
-                <i class="fas fa-step-backward"></i>
-            </a>
-        </li>
 
-        @for (var p = 1; p <= Model.TotPag; p++)
-        {
-            <li class="page-item @(Model.PagAct == p ? "disabled" : "")">
-                <a asp-page="/lbl/index" asp-route-PagAct="@(p)" class="page-link">
-                    @p
-                </a>
-            </li>
-        }
+<partial name="Shared/_Pag" model="@Model" />
 
-        <li class="page-item @(!Model.MosSig ? "disabled" : "")">
-            <a asp-page="/lbl/index" asp-route-PagAct="@(Model.PagAct +1)" class="page-link">
-                <i class="fas fa-step-forward"></i>
-            </a>
-        </li>
-        <li class="page-item @(!Model.MosUlt ? "disabled" : "")">
-            <a asp-page="/lbl/index" asp-route-PagAct="@Model.TotPag" class="page-link">
-                <i class="fas fa-fast-forward"></i>
-            </a>
-        </li>
-    </ul>
-</div>
 <hr />
 
