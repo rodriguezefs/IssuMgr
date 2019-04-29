@@ -13,7 +13,7 @@ namespace IssuMgr.DM.Interfaces {
 
         Task<LstRslt<LblModel>> GetAll();
 
-        Task<PagRslt<LblModel>> GetPag(int numPag, int tamPag);
+        Task<PagRslt<LblModel>> GetPag(int numPag, int tamPag, string ordBy = "LblId", bool esDsn = true);
 
         string GetCnxStr();
         Task<ExeRslt> Update(int id, LblModel Lbl);
