@@ -29,8 +29,8 @@ namespace IssuMgr.BO {
             return LblDM.GetAll();
         }
 
-        public Task<PagRslt<LblModel>> GetPag(int numPag, int tamPag) {
-            return LblDM.GetPag(numPag, tamPag);
+        public Task<PagRslt<LblModel>> GetPag(int numPag, int tamPag, string ordBy = "LblId", bool esDsn = false) {
+            return LblDM.GetPag(numPag, tamPag, ordBy, esDsn);
         }
 
         public Task<ExeRslt> Update(int id, LblModel Lbl) {

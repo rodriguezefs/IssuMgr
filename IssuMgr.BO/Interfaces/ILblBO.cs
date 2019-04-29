@@ -13,7 +13,7 @@ namespace IssuMgr.BO.Interfaces {
 
         Task<LstRslt<LblModel>> GetAll();
 
-        Task<PagRslt<LblModel>> GetPag(int numPag, int tamPag);
+        Task<PagRslt<LblModel>> GetPag(int numPag, int tamPag, string ordBy = "LblId", bool esDsn = false);
 
         Task<ExeRslt> Update(int id, LblModel Lbl);
     }

@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{PagAct=1}/{OrdBy=LblId}/{EsDsn=false}"
 @model IssuMgr.Web.Pages.Lbl.IndexModel
 @{
     ViewData["Title"] = "Labels";
@@ -15,16 +15,60 @@
     <thead>
         <tr>
             <th>
-                Id
+                <a asp-page="Index" class="sort-link" asp-route-OrdBy="LblId" asp-route-EsDsn="@Model.EsDsn">Id</a>
+                @if (Model.OrdBy == "LblId")
+                {
+                    if (Model.EsDsn)
+                    {
+                        <i class='fa fa-sort-down'></i>
+                    }
+                    else
+                    {
+                        <i class='fa fa-sort-up'></i>
+                    }
+                }
             </th>
             <th>
-                Etiqueta
+                <a asp-page="Index" class="sort-link" asp-route-OrdBy="Lbl" asp-route-EsDsn="@Model.EsDsn">Etiqueta</a>
+                @if (Model.OrdBy == "Lbl")
+                {
+                    if (Model.EsDsn)
+                    {
+                        <i class='fa fa-sort-down'></i>
+                    }
+                    else
+                    {
+                        <i class='fa fa-sort-up'></i>
+                    }
+                }
             </th>
             <th>
-                BkColor
+                <a asp-page="Index" class="sort-link" asp-route-OrdBy="BkClr" asp-route-EsDsn="@Model.EsDsn">BkColor</a>
+                @if (Model.OrdBy == "BkClr")
+                {
+                    if (Model.EsDsn)
+                    {
+                        <i class='fa fa-sort-down'></i>
+                    }
+                    else
+                    {
+                        <i class='fa fa-sort-up'></i>
+                    }
+                }
             </th>
             <th>
-                Color
+                <a asp-page="Index" class="sort-link" asp-route-OrdBy="Clr" asp-route-EsDsn="@Model.EsDsn">Color</a>
+                @if (Model.OrdBy == "Clr")
+                {
+                    if (Model.EsDsn)
+                    {
+                        <i class='fa fa-sort-down'></i>
+                    }
+                    else
+                    {
+                        <i class='fa fa-sort-up'></i>
+                    }
+                }
             </th>
             <th></th>
             <th></th>

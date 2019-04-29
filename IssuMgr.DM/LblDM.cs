@@ -173,22 +173,22 @@ namespace IssuMgr.DM {
                 return new LstRslt<LblModel>(new List<LblModel>(), ex);
             }
         }
+
         /// <summary>
         /// Obtener Resultado paginados
         /// </summary>
         /// <param name="pag">Página solicitada</param>
         /// <param name="tam">Tamaño de la página</param>
-        /// <param name="ordBy"></param>
-        /// <param name="esDsn"></param>
+        /// <param name="ordBy">Nombre del campo por el que se ordena</param>
+        /// <param name="esDsn">true si es descendente, por defecto false (ascendente)</param>
         /// <returns>Retorna una clase PagRslt</returns>
         public async Task<PagRslt<LblModel>> GetPag(int pag, int tam, string ordBy = "LblId", bool esDsn = false) {
             DataTable lxDT = new DataTable();
 
             string lxQry =
-                "SELECT LblId, Lbl, BkClr, Clr "
-              + "  FROM [Lbl] "
-             + $" ORDER By {ordBy} "
-             + (esDsn ? "DESC" : "");
+                "SELECT LblId, Lbl, BkClr, Clr " +
+                "  FROM [Lbl] " +
+               $" ORDER By {ordBy} " + (esDsn ? "DESC" : "");
 
             try {
                 using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
