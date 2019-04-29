@@ -1,4 +1,5 @@
 ﻿@page "{PagAct=1}/{OrdBy=LblId}/{EsDsn=false}"
+@using System.Globalization
 @model IssuMgr.Web.Pages.Lbl.IndexModel
 @{
     ViewData["Title"] = "Labels";
@@ -21,7 +22,7 @@
                 }
             </th>
             <th>
-                <a asp-page="Index" class="sort-link" asp-route-OrdBy="Lbl" asp-route-EsDsn="@Model.EsDsn">Etiqueta</a>
+                <a asp-page="Index" class="sort-link" asp-route-OrdBy="Lbl" asp-route-EsDsn="@Model.EsDsn">@L.Text("Lbl")</a>
                 @if (Model.OrdBy == "Lbl")
                 {
                     <i class='fa fa-sort-@(Model.EsDsn ? "down" : "up")'></i>
