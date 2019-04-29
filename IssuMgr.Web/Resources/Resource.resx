@@ -123,4 +123,7 @@
   <data name="Lbls" xml:space="preserve">
     <value>Lbls</value>
   </data>
+  <data name="Clr" xml:space="preserve">
+    <value>Clr</value>
+  </data>
 </root>
