@@ -39,6 +39,7 @@ namespace IssuMgr.Web {
             app.UseStaticFiles();
 
             // Localization
+            // http://ziyad.info/en/articles/15-Localizing_Views
             app.UseRequestLocalization(LocalizationOptions());
 
             app.UseCookiePolicy();
