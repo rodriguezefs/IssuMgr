@@ -31,6 +31,8 @@ namespace IssuMgr.Web.Pages.Issu {
             var lxRslt = await IssuBO.Get(id);
             if(lxRslt.EsVld) {
                 Issu = lxRslt.Sngl;
+            } else {
+                TempData["ExErr"] = lxRslt.Err;
             }
 
             return Page();

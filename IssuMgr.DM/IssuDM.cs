@@ -117,42 +117,44 @@ namespace IssuMgr.DM {
             }
         }
         public async Task<SnglRslt<IssuModel>> Get(int id) {
-            DataTable lxDT = new DataTable();
-            DataTable lxDTL = new DataTable();
+            DataSet lxDS = new DataSet();
 
-            string lxQry =
-                "SELECT Id, Cod_IssuModel, Nom_IssuModel " +
-                "  FROM [Issu]" +
-                " WHERE Id = @id";
+            string lxQryI =
+                "SELECT IssuId, Tit, Txt, St, StmCre, StmMdf " +
+                "  FROM [Issu] I" +
+                " WHERE IssuId = @IssuId";
 
             string lxQryLxI =
-              "SELECT LxI.IssuId, LxI.LblId, L.Lbl, L.BkClr, L.Clr " +
-              " FROM [LblxIssu] LxI " +
-              " LEFT JOIN [Lbl] L " +
-              "   ON L.LblId = LxI.LblId " +
-              "WHERE LxI.IssuId = @IssuId";
-            
+                "SELECT LxI.IssuId, LxI.LblId, L.Lbl, L.BkClr, L.Clr " +
+                " FROM [LblxIssu] LxI " +
+                " LEFT JOIN [Lbl] L " +
+                "   ON L.LblId = LxI.LblId";
+
             try {
                 using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
-                    using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
-                        cmd.Parameters.AddWithValue("Id", id);
+                    using(SqlCommand cmd = new SqlCommand(lxQryI, cnx)) {
+                        cmd.Parameters.AddWithValue("@IssuId", id);
 
                         SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
-                        lxDA.Fill(lxDT);
-                        lxDT.TableName = "Issu";
+                        lxDA.Fill(lxDS, "Issu");
                     }
 
                     using(SqlCommand cmd = new SqlCommand(lxQryLxI, cnx)) {
                         cmd.Parameters.AddWithValue("@IssuId", id);
                         SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
-                        lxDA.Fill(lxDTL);
-                        lxDT.TableName = "LblxIssu";
+                        lxDA.Fill(lxDS, "LblxIssu");
                     }
 
+                    DataColumn lxColIssuIdM = lxDS.Tables["Issu"].Columns["IssuId"];
+                    DataColumn lxColIssuIdD = lxDS.Tables["LblxIssu"].Columns["IssuId"];
+                    DataRelation lxI_LxI = new DataRelation("Issu_LblxIssu", lxColIssuIdM, lxColIssuIdD);
+                    lxDS.Relations.Add(lxI_LxI);
+
                 }
-                if(lxDT.Rows.Count > 0) {
-                    IssuModel lxIssu = lxDT.Rows[0].ToRow<IssuModel>();
-                    FillLbl(ref lxIssu, lxDTL);
+                if(lxDS.Tables["Issu"].Rows.Count > 0) {
+                    
+                    IssuModel lxIssu = lxDS.Tables["Issu"].Rows[0].ToRow<IssuModel>();
+                    FillLbl(ref lxIssu, lxDTL);......; ; ;
 
                     return await Task.FromResult(new SnglRslt<IssuModel>(lxIssu));
                 } else {
@@ -191,11 +193,6 @@ namespace IssuMgr.DM {
                     DataColumn lxColIssuIdD = lxDS.Tables["LblxIssu"].Columns["IssuId"];
                     DataRelation lxI_LxI = new DataRelation("Issu_LblxIssu", lxColIssuIdM, lxColIssuIdD);
                     lxDS.Relations.Add(lxI_LxI);
-
-                    //DataColumn lxColLblIdM = lxDS.Tables["Lbl"].Columns["LblId"];
-                    //DataColumn lxColLblIdD = lxDS.Tables["LblxIssu"].Columns["LblId"];
-                    //DataRelation lxL_LxI = new DataRelation("Lbl_LblxIssu", lxColLblIdM, lxColLblIdD);
-                    //lxDS.Relations.Add(lxL_LxI);
                 }
                 var lxRslt = new LstRslt<IssuModel>();
                 if(lxDS.Tables["Issu"].Rows.Count > 0) {
