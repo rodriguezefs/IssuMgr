@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Nuevo Issue</h1>
+<h1>Editat Issue</h1>
 <hr />
 <partial name="Shared/_MsgErr" />
 
@@ -23,30 +23,19 @@
                 </div>
             </div>
             <div class="col">
-                <div class="dropdown mr-1">
-                    <button type="button" class="btn btn-secondary dropdown-toggle"></button>
-                    <ul class="dropdown-menu">
-                        @{int i = 0; }
-                        @foreach (var lbl in Model.LstLbl) {
-                            <li>
-                                <div class="checkbox">
-                                    @{string lxId = "LstLbl_" + @i + "__LblId";}
-                                    <label><input type="checkbox" name="LstLbl[@i].LblId" id="@lxId" value="@lbl.LblId">@lbl.Lbl</label>
-                                </div>
-                            </li>
-                        }
-                    </ul>
-                </div>
-
-                @*<div class="form-group">
-                        <label asp-for="LstLbl"></label>
-                        <select name="Issu.LstLbl" id="Issu_LstLbl" multiple class="form-control">
-                            @foreach (var lbl in Model.LstLbl)
-                            {
-                                <option value="@lbl.LblId">@lbl.Lbl</option>
+                <div class="form-group">
+                    <label asp-for="LstLbl"></label>
+                    <select name="Issu.LstLbl" id="Issu_LstLbl" multiple class="form-control">
+                        @foreach(var lbl in Model.LstLbl) {
+                            bool lxEsSel = Model.LstLbl.Contains(lbl);
+                            if(lxEsSel) {
+                                <option value="@lbl.LblId" data-clr="@lbl.Clr" data-bkclr="@lbl.BkClr" selected>@lbl.Lbl</option>
+                            } else {
+                                <option value="@lbl.LblId" data-clr="@lbl.Clr" data-bkclr="@lbl.BkClr">@lbl.Lbl</option>
                             }
-                        </select>
-                    </div>*@
+                        }
+                    </select>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -54,6 +43,7 @@
                 <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>
         </div>
+        <div id="LblInputs"></div>
     </form>
 </div>
 
@@ -65,21 +55,5 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#Issu_LstLbl').multiselect({
-                enableClickableOptGroups: true,
-                includeSelectAllOption: true,
-                selectAllText: 'Seleccionar todos',
-                selectAllValue: '*',
-                allSelectedText: 'Todas',
-                nonSelectedText: 'Ninguna',
-                nSelectedText: ' -  Selecionados',
-                maxHeight: 200
-            });
-            $('#Issu_LstLbl').multiselect('selectAll', false);
-            $('#Issu_LstLbl').multiselect('updateButtonText');
-
-        });
-    </script>
+    <script src="~/js/Issu.js" type="text/javascript"></script>
 }

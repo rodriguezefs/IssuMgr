@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IssuMgr.Web.Pages.Issu {
-    public class EditModel: PageModel {
+    public class EditModel : PageModel {
         private readonly IIssuBO IssuBO;
         public EditModel(IIssuBO issuBO) {
             IssuBO = issuBO;
@@ -22,17 +22,22 @@ namespace IssuMgr.Web.Pages.Issu {
         public List<LblModel> LstLbl { get; set; }
 
         public async Task<ActionResult> OnGet(int id) {
-            var lxRslt = await IssuBO.GetAllLbl();
+            var lxRsltLbl = await IssuBO.GetAllLbl();
 
-            if(lxRslt.Err == null) {
-                LstLbl = lxRslt.Lst;
+            if(lxRsltLbl.Err == null) {
+                LstLbl = lxRsltLbl.Lst;
+            }
+
+            var lxRslt = await IssuBO.Get(id);
+            if(lxRslt.EsVld) {
+                Issu = lxRslt.Sngl;
             }
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPost(int id, IFormCollection data) {
-            var lxRslt = await IssuBO.Update(id,Issu);
+        public async Task<IActionResult> OnPost(int id) {
+            var lxRslt = await IssuBO.Update(id, Issu);
 
             if(lxRslt.Err != null) {
                 TempData["ExErr"] = lxRslt.Err;

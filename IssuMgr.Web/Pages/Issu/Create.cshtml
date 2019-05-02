@@ -25,25 +25,8 @@
             <div class="col">
                 <div class="form-group">
                     <label asp-for="LstLbl"></label>
-                    @*<div class="dropdown mr-1">
-                            <button type="button" class="btn btn-secondary dropdown-toggle" id="dropdownMenuButton"></button>
-                            <div class="dropdown-menu">
-                                @{int i = 0; }
-                                @foreach (var lbl in Model.LstLbl)
-                                {
-                                    <a class="dropdown-item" href="#">
-                                        <div class="checkbox">
-                                            @{string lxId = "LstLbl_" + @i + "__LblId";}
-                                            <label><input type="checkbox" name="LstLbl[@i].LblId" id="@lxId" value="@lbl.LblId">@lbl.Lbl</label>
-                                        </div>
-                                    </a>
-                                }
-                            </div>
-                        </div>*@
-
                     <select name="Lbls" id="Lbls" multiple class="form-control">
-                        @foreach (var lbl in Model.LstLbl)
-                        {
+                        @foreach(var lbl in Model.LstLbl) {
                             <option value="@lbl.LblId" data-clr="@lbl.Clr" data-bkclr="@lbl.BkClr">@lbl.Lbl</option>
                         }
                     </select>
@@ -55,9 +38,7 @@
                 <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>
         </div>
-        <div id="LblInputs">
-
-        </div>
+        <div id="LblInputs"></div>
     </form>
 </div>
 
@@ -69,36 +50,5 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#Issu_LstLbl').multiselect({
-                enableClickableOptGroups: true,
-                includeSelectAllOption: true,
-                selectAllText: 'Seleccionar todos',
-                selectAllValue: '*',
-                allSelectedText: 'Todas',
-                nonSelectedText: 'Ninguna',
-                nSelectedText: ' -  Selecionados',
-                maxHeight: 200
-            });
-            $('#Issu_LstLbl').multiselect('selectAll', false);
-            $('#Issu_LstLbl').multiselect('updateButtonText');
-
-            $('#Lbls').on('change', function () {
-                $("#LblInputs").empty();
-                $("#Lbls option:selected").each(function (i, op) {
-                    let lxClr = $(op).attr('data-clr');
-                    let lxBkClr = $(op).attr('data-bkclr');
-                    let lxLblId = $(op).val();
-                    let lxLbl = $(op).text();
-                    let lxStr = '' +
-                        '<input type="text" name="LstLbl[' + i + '].LblId" id="LstLbl_' + i + '__LblId" value = "' + lxLblId + '"/>' +
-                        '<input type="text" name="LstLbl[' + i + '].Lbl" id="LstLbl_' + i + '__Lbl" value = "' + lxLbl + '"/>' +
-                        '<input type="text" name="LstLbl[' + i + '].Clr" id="LstLbl_' + i + '__Clr" value = "' + lxClr + '"/>'+
-                        '<input type="text" name="LstLbl[' + i + '].BkClr" id="LstLbl_' + i + '__BkClr" value = "' + lxBkClr + '"/>'
-                    $("#LblInputs").append(lxStr);
-                });
-            });
-        });
-    </script>
+    <script src="~/js/Issu.js" type="text/javascript"></script>
 }

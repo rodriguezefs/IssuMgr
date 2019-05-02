@@ -11,8 +11,7 @@
             </a>
         </li>
 
-        @for (var p = 1; p <= Model.TotPag; p++)
-        {
+        @for(var p = 1; p <= Model.TotPag; p++) {
             <li class="page-item @(Model.PagAct == p ? "disabled" : "")">
                 <a asp-page="/lbl/index" asp-route-PagAct="@(p)" class="page-link">
                     @p
