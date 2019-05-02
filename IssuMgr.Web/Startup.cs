@@ -63,7 +63,10 @@ namespace IssuMgr.Web {
             // Localization
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-                .AddViewLocalization(options => options.ResourcesPath = "Resources");
+                .AddViewLocalization(options => options.ResourcesPath = "Resources")
+                .AddRazorPagesOptions(o => {
+                    o.Conventions.Add(new CultureTemplateRouteModelConvention());
+                });
 
             // DI
             services.AddSingleton<CultureLocalizer>();
@@ -84,7 +87,7 @@ namespace IssuMgr.Web {
             lxLoc.SupportedUICultures.Add(new CultureInfo("en-US"));
             lxLoc.SupportedCultures.Add(new CultureInfo("es-ES"));
             lxLoc.SupportedUICultures.Add(new CultureInfo("es-ES"));
-            lxLoc.DefaultRequestCulture = new RequestCulture(CultureInfo.InvariantCulture);
+            lxLoc.DefaultRequestCulture = new RequestCulture("en-US");
 
             return lxLoc;
         }
