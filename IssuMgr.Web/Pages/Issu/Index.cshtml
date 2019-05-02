@@ -10,50 +10,48 @@
 <hr />
 <partial name="Shared/_MsgErr" />
 
-@if (Model.Issus != null || Model.Issus.Count > 0)
-{
-    <ul class="list-group">
-        @foreach (var lxIssu in Model.Issus)
-        {
-            <li class="list-group-item">
-                <div class="card">
-                    <h2 class="card-header">
-                        Issue #@lxIssu.IssuId
-                    </h2>
-                    <h4 class="card-title">@lxIssu.Tit</h4>
-                    <p class="card-text">
-                        @lxIssu.Txt
-                        @if (lxIssu.LstLbl != null)
-                        {
-                            @foreach (var lxLbl in lxIssu.LstLbl)
-                            {
-                                <span class="lbl" style="color: #@lxLbl.Clr; background-color: #@lxLbl.BkClr">@lxLbl.Lbl</span>
-                            }
-                        }
-                    </p>
-                    <div class="card-footer">
-                        <div class="row">
-                            <div class="col">
-                                <span>Creada: @lxIssu.StmCre</span>
-                            </div>
-                            <div class="col">
-                                <span>Modificada: @lxIssu.StmMdf</span>
-                            </div>
-                            <div class="col">
-                                <div class="text-right">
-                                    <a asp-page="./Edit" asp-route-id="@lxIssu.IssuId">Edit</a> |
-                                    <a asp-page="./Delete" asp-route-id="@lxIssu.IssuId">Delete</a>
+@if(Model.Issus != null || Model.Issus.Count > 0) {
+    <table class="table table-hover table-sm mt-2">
+        <tbody>
+            @foreach(var lxIssu in Model.Issus) {
+                <tr>
+                    <td>
+                        <div class="card">
+                            <p class="card-title m-1 p-1">
+                                <b>@lxIssu.Tit</b>&nbsp;
+                                @if(lxIssu.LstLbl != null) {
+                                    @foreach(var lxLbl in lxIssu.LstLbl) {
+                                        <span class="lbl" style="color: #@lxLbl.Clr; background-color: #@lxLbl.BkClr"><small>@lxLbl.Lbl</small></span>
+                                    }
+                                }
+                            </p>
+                            <div class="card-footer p-1">
+                                <div class="row">
+                                    
+                                    <div class="col">
+                                        <small>#@lxIssu.IssuId</small>
+                                    </div>
+                                    <div class="col">
+                                        <small>Creada: @lxIssu.StmCre.ToString("dd/MM/yyyy hh:mm tt")</small>
+                                    </div>
+                                    <div class="col">
+                                        <small>Modificada: @lxIssu.StmMdf.ToString("dd/MM/yyyy hh:mm tt")</small>
+                                    </div>
+                                    <div class="col">
+                                        <div class="text-right">
+                                            <a asp-page="./Edit" asp-route-id="@lxIssu.IssuId">Edit</a> |
+                                            <a asp-page="./Delete" asp-route-id="@lxIssu.IssuId">Delete</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </li>
-        }
-    </ul>
-}
-else
-{
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+} else {
     <p>No hay Issues</p>
 }
 <hr />

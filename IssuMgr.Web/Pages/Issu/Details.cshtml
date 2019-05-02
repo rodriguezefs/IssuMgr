@@ -1,0 +1,59 @@
+﻿@page
+@model IssuMgr.Web.Pages.Issu.DetailsModel
+@{
+    ViewData["Title"] = "Issues";
+}
+<h1>Issues</h1>
+
+<a asp-page="./Create" class="btn btn-primary">Nuevo</a>
+<br />
+<hr />
+<partial name="Shared/_MsgErr" />
+
+@if (Model.Issus != null || Model.Issus.Count > 0)
+{
+    <ul class="list-group">
+        @foreach (var lxIssu in Model.Issus)
+        {
+            <li class="list-group-item">
+                <div class="card">
+                    <h2 class="card-header">
+                        Issue #@lxIssu.IssuId
+                    </h2>
+                    <h4 class="card-title">@lxIssu.Tit</h4>
+                    <p class="card-text">
+                        @lxIssu.Txt
+                        @if (lxIssu.LstLbl != null)
+                        {
+                            @foreach (var lxLbl in lxIssu.LstLbl)
+                            {
+                                <span class="lbl" style="color: #@lxLbl.Clr; background-color: #@lxLbl.BkClr">@lxLbl.Lbl</span>
+                            }
+                        }
+                    </p>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col">
+                                <span>Creada: @lxIssu.StmCre</span>
+                            </div>
+                            <div class="col">
+                                <span>Modificada: @lxIssu.StmMdf</span>
+                            </div>
+                            <div class="col">
+                                <div class="text-right">
+                                    <a asp-page="./Edit" asp-route-id="@lxIssu.IssuId">Edit</a> |
+                                    <a asp-page="./Delete" asp-route-id="@lxIssu.IssuId">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No hay Issues</p>
+}
+<hr />
