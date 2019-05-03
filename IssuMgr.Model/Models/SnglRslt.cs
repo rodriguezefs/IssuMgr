@@ -3,6 +3,8 @@
 namespace IssuMgr.Model {
     public class SnglRslt<T> where T : class {
 
+        private Exception _Err;
+
         public SnglRslt() { }
 
         public SnglRslt(T sngl, Exception err) {
@@ -13,10 +15,6 @@ namespace IssuMgr.Model {
             Sngl = sngl;
             Err = null;
         }
-        public bool EsVld { get; set; }
-
-        private Exception _Err;
-
         public Exception Err {
             get { return _Err; }
             set {
@@ -25,7 +23,7 @@ namespace IssuMgr.Model {
             }
         }
 
-
+        public bool EsVld { get; set; }
         public T Sngl { get; set; }
     }
 }

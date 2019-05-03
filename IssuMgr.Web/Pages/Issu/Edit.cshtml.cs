@@ -24,16 +24,18 @@ namespace IssuMgr.Web.Pages.Issu {
         public async Task<ActionResult> OnGet(int id) {
             var lxRsltLbl = await IssuBO.GetAllLbl();
 
-            if(lxRsltLbl.Err == null) {
-                LstLbl = lxRsltLbl.Lst;
+            if(lxRsltLbl.EsVld == false) {
+                TempData["ExErr"] = lxRsltLbl.Err;
+                return RedirectToPage("./Index");
             }
+            LstLbl = lxRsltLbl.Lst;
 
             var lxRslt = await IssuBO.Get(id);
-            if(lxRslt.EsVld) {
-                Issu = lxRslt.Sngl;
-            } else {
+            if(lxRslt.EsVld == false) {
                 TempData["ExErr"] = lxRslt.Err;
+                return RedirectToPage("./Index");
             }
+            Issu = lxRslt.Sngl;
 
             return Page();
         }
@@ -41,7 +43,7 @@ namespace IssuMgr.Web.Pages.Issu {
         public async Task<IActionResult> OnPost(int id) {
             var lxRslt = await IssuBO.Update(id, Issu);
 
-            if(lxRslt.Err != null) {
+            if(lxRslt.EsVld == false) {
                 TempData["ExErr"] = lxRslt.Err;
                 return Page();
             }

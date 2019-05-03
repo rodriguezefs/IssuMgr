@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace IssuMgr.DM {
-    public class IssuDM: IIssuDM {
+    public class IssuDM : IIssuDM {
         private readonly IConfiguration Cfg;
         public IssuDM(IConfiguration cfg) {
             Cfg = cfg;
@@ -49,7 +49,7 @@ namespace IssuMgr.DM {
                             using(SqlCommand cmdL = new SqlCommand(lxQryLbl, cnx, trns)) {
                                 cmdL.CommandType = CommandType.Text;
                                 cmdL.Parameters.AddWithValue("@IssuId", Issu.IssuId);
-                                cmdL.Parameters.AddWithValue("@LblId",  lxLbl.LblId);
+                                cmdL.Parameters.AddWithValue("@LblId", lxLbl.LblId);
 
                                 await cmdL.ExecuteScalarAsync();
                             }
@@ -128,7 +128,8 @@ namespace IssuMgr.DM {
                 "SELECT LxI.IssuId, LxI.LblId, L.Lbl, L.BkClr, L.Clr " +
                 " FROM [LblxIssu] LxI " +
                 " LEFT JOIN [Lbl] L " +
-                "   ON L.LblId = LxI.LblId";
+                "   ON L.LblId = LxI.LblId " +
+                "WHERE IssuId = @IssuId";
 
             try {
                 using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
@@ -151,16 +152,19 @@ namespace IssuMgr.DM {
                     lxDS.Relations.Add(lxI_LxI);
 
                 }
+                var lxRslt = new SnglRslt<IssuModel>();
                 if(lxDS.Tables["Issu"].Rows.Count > 0) {
-                    
-                    IssuModel lxIssu = lxDS.Tables["Issu"].Rows[0].ToRow<IssuModel>();
-                    FillLbl(ref lxIssu, lxDTL);......; ; ;
 
-                    return await Task.FromResult(new SnglRslt<IssuModel>(lxIssu));
-                } else {
-                    return null;
+                    IssuModel lxIssu = lxDS.Tables["Issu"].Rows[0].ToRow<IssuModel>();
+                    FillLbl(ref lxIssu, lxDS.Tables["LblxIssu"]);
+                    lxRslt = new SnglRslt<IssuModel>(lxIssu);
                 }
+                return await Task.FromResult(lxRslt);
+
             } catch(Exception ex) {
+                ex.Data.Add("QryI", lxQryI);
+                ex.Data.Add("QryLxI", lxQryLxI);
+                ex.Data.Add("Method", Ext.GetCaller());
                 return new SnglRslt<IssuModel>(new IssuModel(), ex);
             }
         }
@@ -233,6 +237,8 @@ namespace IssuMgr.DM {
                     return new LstRslt<LblModel>(new List<LblModel>());
                 }
             } catch(Exception ex) {
+                ex.Data.Add("Qry", lxQry);
+                ex.Data.Add("Method", Ext.GetCaller());
                 return new LstRslt<LblModel>(new List<LblModel>(), ex);
             }
         }
@@ -271,6 +277,14 @@ namespace IssuMgr.DM {
                 return new ExeRslt(-1, ex);
             }
         }
+        private void FillLbl(ref IssuModel Issu, DataTable DT) {
+            DataRow[] lxRows = DT.Select();
+            Issu.LstLbl = new List<LblModel>();
+            foreach(var lxRow in lxRows) {
+                var lxLbl = lxRow.ToRow<LblModel>();
+                Issu.LstLbl.Add(lxLbl);
+            }
+        }
         private void FillLbls(ref List<IssuModel> Issus, DataSet DS) {
 
             foreach(var lxIssu in Issus) {
@@ -281,15 +295,6 @@ namespace IssuMgr.DM {
                     var lxLbl = lxRow.ToRow<LblModel>();
                     lxIssu.LstLbl.Add(lxLbl);
                 }
-            }
-        }
-
-        private void FillLbl(ref IssuModel Issu, DataTable DT) {
-            DataRow[] lxRows = DT.Select();
-            Issu.LstLbl = new List<LblModel>();
-            foreach(var lxRow in lxRows) {
-                var lxLbl = lxRow.ToRow<LblModel>();
-                Issu.LstLbl.Add(lxLbl);
             }
         }
     }

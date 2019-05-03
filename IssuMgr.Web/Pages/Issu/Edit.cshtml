@@ -26,12 +26,14 @@
                 <div class="form-group">
                     <label asp-for="LstLbl"></label>
                     <select name="Issu.LstLbl" id="Issu_LstLbl" multiple class="form-control">
-                        @foreach(var lbl in Model.LstLbl) {
-                            bool lxEsSel = Model.LstLbl.Contains(lbl);
-                            if(lxEsSel) {
-                                <option value="@lbl.LblId" data-clr="@lbl.Clr" data-bkclr="@lbl.BkClr" selected>@lbl.Lbl</option>
-                            } else {
-                                <option value="@lbl.LblId" data-clr="@lbl.Clr" data-bkclr="@lbl.BkClr">@lbl.Lbl</option>
+                        @foreach (var itmlbl in Model.LstLbl) {
+                            foreach (var lbl in Model.Issu.LstLbl) {
+                                bool lxEsSel = lbl.LblId == itmlbl.LblId;
+                                if (lxEsSel) {
+                                    <option value="@itmlbl.LblId" data-clr="@itmlbl.Clr" data-bkclr="@itmlbl.BkClr" selected>@itmlbl.Lbl</option>
+                                } else {
+                                    <option value="@itmlbl.LblId" data-clr="@itmlbl.Clr" data-bkclr="@itmlbl.BkClr">@itmlbl.Lbl</option>
+                                }
                             }
                         }
                     </select>

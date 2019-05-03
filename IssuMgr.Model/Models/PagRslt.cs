@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace IssuMgr.Model {
     public class PagRslt<T> where T : class {
+        private Exception _Err;
+
         public PagRslt() {
         }
 
@@ -29,9 +31,15 @@ namespace IssuMgr.Model {
             Err = err;
             CalcPag(0, 0, 0);
         }
+        public Exception Err {
+            get { return _Err; }
+            set {
+                _Err = value;
+                EsVld = _Err == null;
+            }
+        }
 
-        public Exception Err { get; set; }
-
+        public bool EsVld { get; set; }
         public List<T> Lst { get; set; }
 
         public int PrmPag { get; private set; } = 1;
