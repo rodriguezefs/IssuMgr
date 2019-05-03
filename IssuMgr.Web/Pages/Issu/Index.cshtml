@@ -29,7 +29,7 @@
                                 <div class="row">
                                     
                                     <div class="col">
-                                        <small>#@lxIssu.IssuId</small>
+                                        <small><a asp-page="./Details" asp-route-id="@lxIssu.IssuId" class="card-link">#@lxIssu.IssuId</a></small>
                                     </div>
                                     <div class="col">
                                         <small>Creada: @lxIssu.StmCre.ToString("dd/MM/yyyy hh:mm tt")</small>
@@ -39,8 +39,8 @@
                                     </div>
                                     <div class="col">
                                         <div class="text-right">
-                                            <a asp-page="./Edit" asp-route-id="@lxIssu.IssuId">Edit</a> |
-                                            <a asp-page="./Delete" asp-route-id="@lxIssu.IssuId">Delete</a>
+                                            <a asp-page="./Edit" asp-route-id="@lxIssu.IssuId" class="card-link">Edit</a> |
+                                            <a asp-page="./Delete" asp-route-id="@lxIssu.IssuId" class="card-link">Delete</a>
                                         </div>
                                     </div>
                                 </div>

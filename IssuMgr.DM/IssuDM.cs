@@ -252,8 +252,8 @@ namespace IssuMgr.DM {
                            "       Tit = @Tit," +
                            "       Txt = @Txt," +
                            "       St = @St," +
-                           "       StmMdf = @StmMdf " +
-                           " WHERE IssuId = @id";
+                           "       StmMdf = GetDate() " +
+                           " WHERE IssuId = @IssuId";
             try {
                 using(SqlConnection cnx = new SqlConnection(GetCnxStr())) {
                     using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
@@ -261,8 +261,7 @@ namespace IssuMgr.DM {
                         cmd.Parameters.AddWithValue("@Tit", Issu.Tit);
                         cmd.Parameters.AddWithValue("@Txt", Issu.Txt);
                         cmd.Parameters.AddWithValue("@St", Issu.St);
-                        cmd.Parameters.AddWithValue("@StmMdf", Issu.StmMdf);
-
+                        
                         cmd.Parameters.AddWithValue("@IssuId", id);
 
                         await cnx.OpenAsync();

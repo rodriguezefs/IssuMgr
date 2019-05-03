@@ -45,6 +45,14 @@ namespace IssuMgr.Web.Pages.Issu {
 
             if(lxRslt.EsVld == false) {
                 TempData["ExErr"] = lxRslt.Err;
+
+                var lxRsltLbl = await IssuBO.GetAllLbl();
+                if(lxRsltLbl.EsVld == false) {
+                    TempData["ExErr"] = lxRsltLbl.Err;
+                    return RedirectToPage("./Index");
+                }
+                LstLbl = lxRsltLbl.Lst;
+
                 return Page();
             }
 
