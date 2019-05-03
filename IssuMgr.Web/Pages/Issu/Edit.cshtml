@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Editat Issue</h1>
+<h1>Editar Issue</h1>
 <hr />
 <partial name="Shared/_MsgErr" />
 
@@ -31,8 +31,10 @@
                                 bool lxEsSel = lbl.LblId == itmlbl.LblId;
                                 if (lxEsSel) {
                                     <option value="@itmlbl.LblId" data-clr="@itmlbl.Clr" data-bkclr="@itmlbl.BkClr" selected>@itmlbl.Lbl</option>
+                                    break;
                                 } else {
                                     <option value="@itmlbl.LblId" data-clr="@itmlbl.Clr" data-bkclr="@itmlbl.BkClr">@itmlbl.Lbl</option>
+                                    break;
                                 }
                             }
                         }
