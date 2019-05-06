@@ -29,8 +29,9 @@ namespace IssuMgr.Web.Identity {
                    $"@{nameof(ApplicationUser.NormalizedEmail)}, @{nameof(ApplicationUser.EmailConfirmed)}, @{nameof(ApplicationUser.PasswordHash)}, " +
                    $"@{nameof(ApplicationUser.PhoneNumber)}, @{nameof(ApplicationUser.PhoneNumberConfirmed)}, @{nameof(ApplicationUser.TwoFactorEnabled)}); " +
                    " SELECT CAST(SCOPE_IDENTITY() as int)";
+
                 using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
-                    cmd.CommandType = System.Data.CommandType.Text;
+                    cmd.CommandType = CommandType.Text;
                     cmd.Parameters.AddWithValue($"@{nameof(ApplicationUser.UserName)}", user.UserName);
 
                     var id = await cmd.ExecuteScalarAsync();
@@ -49,6 +50,8 @@ namespace IssuMgr.Web.Identity {
                 string lxQry = $"DELETE FROM [ApplicationUser] WHERE [Id] = @{nameof(ApplicationUser.Id)}";
 
                 using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue($"@{nameof(ApplicationUser.Id)}", user.Id);
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
@@ -66,13 +69,14 @@ namespace IssuMgr.Web.Identity {
                 await cnx.OpenAsync(cancellationToken);
                 using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
                     cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue("@{nameof(userId)}", userId);
 
                     SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
                     lxDA.Fill(lxDT);
-                    lxDT.TableName = "Lbl";
 
                 }
-                return lxDT.Rows[0].ToRow<ApplicationUser>();
+                var lxAppUsr = lxDT.Rows[0].ToRow<ApplicationUser>();
+                return lxAppUsr;
 
                 //return await cnx.QuerySingleOrDefaultAsync<ApplicationUser>($@"SELECT * FROM [ApplicationUser]
                 //WHERE [Id] = @{nameof(userId)}", new { userId });
@@ -81,11 +85,23 @@ namespace IssuMgr.Web.Identity {
 
         public async Task<ApplicationUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken) {
             cancellationToken.ThrowIfCancellationRequested();
+            DataTable lxDT = new DataTable();
 
-            using(var connection = new SqlConnection(_connectionString)) {
-                await connection.OpenAsync(cancellationToken);
-                return await connection.QuerySingleOrDefaultAsync<ApplicationUser>($@"SELECT * FROM [ApplicationUser]
-                WHERE [NormalizedUserName] = @{nameof(normalizedUserName)}", new { normalizedUserName });
+            using(var cnx = new SqlConnection(_connectionString)) {
+
+                string lxQry =
+                      $@"SELECT * FROM [ApplicationUser] WHERE [NormalizedUserName] = @{nameof(normalizedUserName)}";
+
+                await cnx.OpenAsync(cancellationToken);
+                using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue($"@{nameof(normalizedUserName)}", normalizedUserName);
+
+                    SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
+                    lxDA.Fill(lxDT);
+                }
+                var lxAppUsr = lxDT.Rows[0].ToRow<ApplicationUser>();
+                return lxAppUsr;
             }
         }
 
@@ -114,19 +130,39 @@ namespace IssuMgr.Web.Identity {
         public async Task<IdentityResult> UpdateAsync(ApplicationUser user, CancellationToken cancellationToken) {
             cancellationToken.ThrowIfCancellationRequested();
 
-            using(var connection = new SqlConnection(_connectionString)) {
-                await connection.OpenAsync(cancellationToken);
-                await connection.ExecuteAsync($@"UPDATE [ApplicationUser] SET
-                [UserName] = @{nameof(ApplicationUser.UserName)},
-                [NormalizedUserName] = @{nameof(ApplicationUser.NormalizedUserName)},
-                [Email] = @{nameof(ApplicationUser.Email)},
-                [NormalizedEmail] = @{nameof(ApplicationUser.NormalizedEmail)},
-                [EmailConfirmed] = @{nameof(ApplicationUser.EmailConfirmed)},
-                [PasswordHash] = @{nameof(ApplicationUser.PasswordHash)},
-                [PhoneNumber] = @{nameof(ApplicationUser.PhoneNumber)},
-                [PhoneNumberConfirmed] = @{nameof(ApplicationUser.PhoneNumberConfirmed)},
-                [TwoFactorEnabled] = @{nameof(ApplicationUser.TwoFactorEnabled)}
-                WHERE [Id] = @{nameof(ApplicationUser.Id)}", user);
+            using(var cnx = new SqlConnection(_connectionString)) {
+
+                string lxQry =
+                    $@"UPDATE 
+                         [ApplicationUser] 
+                       SET
+                         [UserName] = @{nameof(ApplicationUser.UserName)},
+                         [NormalizedUserName] = @{nameof(ApplicationUser.NormalizedUserName)},
+                         [Email] = @{nameof(ApplicationUser.Email)},
+                         [NormalizedEmail] = @{nameof(ApplicationUser.NormalizedEmail)},
+                         [EmailConfirmed] = @{nameof(ApplicationUser.EmailConfirmed)},
+                         [PasswordHash] = @{nameof(ApplicationUser.PasswordHash)},
+                         [PhoneNumber] = @{nameof(ApplicationUser.PhoneNumber)},
+                         [PhoneNumberConfirmed] = @{nameof(ApplicationUser.PhoneNumberConfirmed)},
+                         [TwoFactorEnabled] = @{nameof(ApplicationUser.TwoFactorEnabled)}
+                       WHERE [Id] = @{nameof(ApplicationUser.Id)}";
+
+                await cnx.OpenAsync(cancellationToken);
+
+                using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue($"@{nameof(ApplicationUser.UserName)}", user.UserName);
+                    cmd.Parameters.AddWithValue($"@{nameof(ApplicationUser.NormalizedUserName)}", user.NormalizedUserName);
+                    cmd.Parameters.AddWithValue($"@{nameof(ApplicationUser.Email)}", user.Email);
+                    cmd.Parameters.AddWithValue($"@{nameof(ApplicationUser.NormalizedEmail)}", user.NormalizedEmail);
+                    cmd.Parameters.AddWithValue($"@{nameof(ApplicationUser.EmailConfirmed)}", user.EmailConfirmed);
+                    cmd.Parameters.AddWithValue($"@{nameof(ApplicationUser.PasswordHash)}", user.PasswordHash);
+                    cmd.Parameters.AddWithValue($"@{nameof(ApplicationUser.PhoneNumber)}", user.PhoneNumber);
+                    cmd.Parameters.AddWithValue($"@{nameof(ApplicationUser.PhoneNumberConfirmed)}", user.PhoneNumberConfirmed);
+                    cmd.Parameters.AddWithValue($"@{nameof(ApplicationUser.TwoFactorEnabled)}", user.TwoFactorEnabled);
+
+                    await cmd.ExecuteNonQueryAsync();
+                }
             }
 
             return IdentityResult.Success;
@@ -152,11 +188,23 @@ namespace IssuMgr.Web.Identity {
 
         public async Task<ApplicationUser> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken) {
             cancellationToken.ThrowIfCancellationRequested();
+            DataTable lxDT = new DataTable();
 
-            using(var connection = new SqlConnection(_connectionString)) {
-                await connection.OpenAsync(cancellationToken);
-                return await connection.QuerySingleOrDefaultAsync<ApplicationUser>($@"SELECT * FROM [ApplicationUser]
-                WHERE [NormalizedEmail] = @{nameof(normalizedEmail)}", new { normalizedEmail });
+            string lxQry = $@"SELECT * FROM [ApplicationUser] WHERE [NormalizedEmail] = @{nameof(normalizedEmail)}";
+
+            using(var cnx = new SqlConnection(_connectionString)) {
+                await cnx.OpenAsync(cancellationToken);
+
+                using(SqlCommand cmd = new SqlCommand(lxQry, cnx)) {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue($"@{nameof(normalizedEmail)}", normalizedEmail);
+
+                    SqlDataAdapter lxDA = new SqlDataAdapter(cmd);
+                    lxDA.Fill(lxDT);
+                }
+
+                var lxAppUsr = lxDT.Rows[0].ToRow<ApplicationUser>();
+                return lxAppUsr;
             }
         }
 
