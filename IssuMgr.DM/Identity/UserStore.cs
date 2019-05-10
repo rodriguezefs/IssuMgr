@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace IssuMgr.Web.Identity {
     public class UserStore : IUserStore<ApplicationUser>, IUserEmailStore<ApplicationUser>, IUserPhoneNumberStore<ApplicationUser>,
-         IUserTwoFactorStore<ApplicationUser>, IUserPasswordStore<ApplicationUser> {
+         IUserTwoFactorStore<ApplicationUser>, IUserPasswordStore<ApplicationUser>, IUserStore {
         private readonly string _connectionString;
 
         public UserStore(IConfiguration configuration) {

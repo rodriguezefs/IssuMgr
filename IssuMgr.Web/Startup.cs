@@ -1,21 +1,19 @@
-using IssuMgr.DM.Interfaces;
 using IssuMgr.BO;
 using IssuMgr.BO.Interfaces;
 using IssuMgr.DM;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using IssuMgr.DM.Interfaces;
+using IssuMgr.Web.Resources;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Globalization;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
-using IssuMgr.Web.Resources;
 
 namespace IssuMgr.Web {
     public class Startup {
@@ -37,6 +35,7 @@ namespace IssuMgr.Web {
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
 
             // Localization
             // http://ziyad.info/en/articles/15-Localizing_Views
@@ -58,6 +57,7 @@ namespace IssuMgr.Web {
             services.Configure<CookiePolicyOptions>(options => {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
             // Localization
@@ -67,6 +67,10 @@ namespace IssuMgr.Web {
                 .AddRazorPagesOptions(o => {
                     o.Conventions.Add(new CultureTemplateRouteModelConvention());
                 });
+
+            //https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity-custom-storage-providers?view=aspnetcore-2.2
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddDefaultUI(UIFramework.Bootstrap4);
 
             // DI
             services.AddSingleton<CultureLocalizer>();
